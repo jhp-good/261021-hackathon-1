@@ -43,7 +43,7 @@ export default function QuotePage() {
   }
 
   return (
-    <>
+    <div className="narrow">
       <div className="tabs" role="tablist">
         {TABS.map((t) => (
           <button key={t.key} role="tab" aria-selected={category === t.key} onClick={() => switchTab(t.key)}>
@@ -131,6 +131,6 @@ export default function QuotePage() {
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
