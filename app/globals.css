@@ -163,3 +163,16 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
   margin-top: 8px; padding: 8px; border: 0; border-radius: 8px; cursor: pointer;
   background: var(--accent-soft); color: var(--accent); font-weight: 700;
 }
+.card button.plain { background: transparent; color: var(--muted); border: 1px dashed var(--line); font-weight: 600; }
+.card button.feedback {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left;
+  background: var(--bg); color: var(--text); font-weight: 400; white-space: pre-wrap;
+}
+.card button.feedback span { font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+.feedback-edit { margin-top: 8px; }
+.feedback-edit textarea {
+  width: 100%; padding: 8px; border: 2px solid var(--accent); border-radius: 8px;
+  background: var(--surface); color: var(--text); font: inherit; resize: vertical;
+}
+.feedback-edit .row { display: flex; gap: 6px; }
+.feedback-edit .row button { flex: 1; margin-top: 4px; }

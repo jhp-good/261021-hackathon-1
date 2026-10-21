@@ -1,6 +1,6 @@
 // 샘플 단계 — 규칙은 spec/calc-rules.md
 
-export const STAGES = ["포장", "발송", "도착", "피드백"] as const;
+export const STAGES = ["포장", "발송", "도착", "확인완료"] as const;
 export type Stage = (typeof STAGES)[number];
 
 export type Sample = {
@@ -10,11 +10,12 @@ export type Sample = {
   sentDate: string; // YYYY-MM-DD
   stage: Stage;
   note: string;
+  feedback: string; // 거래처 피드백 — 화면에서 직접 적는다
 };
 
 export const DELAY_DAYS = 7;
 
-// 다음 단계 — 피드백에서 더 안 감
+// 다음 단계 — 확인완료에서 더 안 감
 export function nextStage(stage: Stage): Stage {
   return STAGES[Math.min(STAGES.indexOf(stage) + 1, STAGES.length - 1)];
 }

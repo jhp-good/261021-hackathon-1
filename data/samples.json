@@ -4,24 +4,27 @@
     "productCode": "B01-190x57",
     "customer": "○○건설",
     "sentDate": "2026-10-01",
-    "stage": "피드백",
-    "note": "색감 좋음, 본 발주 검토"
+    "stage": "확인완료",
+    "note": "대표 샘플 2장",
+    "feedback": "색감 좋음, 본 발주 검토"
   },
   {
     "id": "S-02",
     "productCode": "B05-190x57",
     "customer": "△△인테리어",
     "sentDate": "2026-10-03",
-    "stage": "피드백",
-    "note": "줄눈은 회색으로 결정"
+    "stage": "확인완료",
+    "note": "줄눈 색 비교용",
+    "feedback": "줄눈은 회색으로 결정"
   },
   {
     "id": "S-03",
     "productCode": "T02-230x76",
     "customer": "□□건축",
     "sentDate": "2026-10-06",
-    "stage": "피드백",
-    "note": "투톤 비율 다른 것도 보고 싶다고 함"
+    "stage": "확인완료",
+    "note": "",
+    "feedback": "투톤 비율 다른 것도 보고 싶다고 함"
   },
   {
     "id": "S-04",
@@ -29,7 +32,8 @@
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-12",
     "stage": "도착",
-    "note": "현장 소장 확인 대기"
+    "note": "현장 소장 확인 대기",
+    "feedback": ""
   },
   {
     "id": "S-05",
@@ -37,7 +41,8 @@
     "customer": "○○건설",
     "sentDate": "2026-10-15",
     "stage": "도착",
-    "note": "전돌과 질감 비교용"
+    "note": "전돌과 질감 비교용",
+    "feedback": ""
   },
   {
     "id": "S-06",
@@ -45,7 +50,8 @@
     "customer": "☆☆리모델링",
     "sentDate": "2026-10-16",
     "stage": "도착",
-    "note": "외벽 일부 시공 샘플"
+    "note": "외벽 일부 시공 샘플",
+    "feedback": ""
   },
   {
     "id": "S-07",
@@ -53,7 +59,8 @@
     "customer": "△△인테리어",
     "sentDate": "2026-10-09",
     "stage": "발송",
-    "note": "도착 연락 없음 — 배송 조회 필요"
+    "note": "도착 연락 없음 — 배송 조회 필요",
+    "feedback": ""
   },
   {
     "id": "S-08",
@@ -61,7 +68,8 @@
     "customer": "□□건축",
     "sentDate": "2026-10-12",
     "stage": "발송",
-    "note": "현장 주소 변경 여부 확인"
+    "note": "현장 주소 변경 여부 확인",
+    "feedback": ""
   },
   {
     "id": "S-09",
@@ -69,7 +77,8 @@
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-18",
     "stage": "발송",
-    "note": "화물 발송"
+    "note": "화물 발송",
+    "feedback": ""
   },
   {
     "id": "S-10",
@@ -77,7 +86,8 @@
     "customer": "☆☆리모델링",
     "sentDate": "2026-10-19",
     "stage": "발송",
-    "note": "그레이 두 가지 비교"
+    "note": "그레이 두 가지 비교",
+    "feedback": ""
   },
   {
     "id": "S-11",
@@ -85,7 +95,8 @@
     "customer": "○○건설",
     "sentDate": "2026-10-20",
     "stage": "발송",
-    "note": "얇은 규격 문의"
+    "note": "얇은 규격 문의",
+    "feedback": ""
   },
   {
     "id": "S-12",
@@ -93,7 +104,8 @@
     "customer": "△△인테리어",
     "sentDate": "2026-10-21",
     "stage": "포장",
-    "note": "2장씩 포장"
+    "note": "2장씩 포장",
+    "feedback": ""
   },
   {
     "id": "S-13",
@@ -101,7 +113,8 @@
     "customer": "□□건축",
     "sentDate": "2026-10-21",
     "stage": "포장",
-    "note": "화이트 타일 비교용"
+    "note": "화이트 타일 비교용",
+    "feedback": ""
   },
   {
     "id": "S-14",
@@ -109,7 +122,8 @@
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-20",
     "stage": "포장",
-    "note": ""
+    "note": "",
+    "feedback": ""
   },
   {
     "id": "S-15",
@@ -117,6 +131,7 @@
     "customer": "☆☆리모델링",
     "sentDate": "2026-10-21",
     "stage": "포장",
-    "note": "레드와 함께 발송 예정"
+    "note": "레드와 함께 발송 예정",
+    "feedback": ""
   }
 ]

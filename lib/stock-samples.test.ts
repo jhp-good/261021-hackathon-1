@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { sortBySignal, stockSignal } from "./stock";
-import { daysSince, isDelayed, nextStage, type Sample } from "./samples";
+import { daysSince, isDelayed, nextStage, STAGES, type Sample } from "./samples";
 import products from "../data/products.json";
 import samples from "../data/samples.json";
 
@@ -35,8 +35,8 @@ describe("재고 신호등", () => {
 });
 
 describe("샘플 단계", () => {
-  it("포장 → 발송 → 도착 → 피드백, 피드백에서 더 안 감", () => {
-    expect([nextStage("포장"), nextStage("발송"), nextStage("도착"), nextStage("피드백")]).toEqual(["발송", "도착", "피드백", "피드백"]);
+  it("포장 → 발송 → 도착 → 확인완료, 확인완료에서 더 안 감", () => {
+    expect([nextStage("포장"), nextStage("발송"), nextStage("도착"), nextStage("확인완료")]).toEqual(["발송", "도착", "확인완료", "확인완료"]);
   });
 
   it("발송 단계에서 7일 초과면 지연 (7일은 아님)", () => {
@@ -51,6 +51,10 @@ describe("샘플 단계", () => {
     const list = samples as Sample[];
     expect(list).toHaveLength(15);
     const codes = new Set(products.map((p) => p.code));
-    for (const s of list) expect(codes.has(s.productCode)).toBe(true);
+    for (const s of list) {
+      expect(codes.has(s.productCode)).toBe(true);
+      expect(STAGES).toContain(s.stage);
+      expect(typeof s.feedback).toBe("string");
+    }
   });
 });
