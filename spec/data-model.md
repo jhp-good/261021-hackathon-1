@@ -24,9 +24,9 @@
 | productCode | string | products.json의 code |
 | customer | string | 가상 이름 `○○건설`, `△△인테리어` |
 | sentDate | string | `YYYY-MM-DD` |
-| stage | "포장" \| "발송" \| "도착" \| "확인완료" | 현재 단계 |
-| note | string | 메모 |
-| feedback | string | 거래처 피드백. 화면에서 적고 고친 값은 localStorage에 |
+| stage | "발송 준비" \| "발송" \| "도착" \| "확인완료" | 현재 단계 |
+| note | string | 메모. 발송 준비 단계에서 적음 |
+| feedback | string | 거래처 피드백. 확인완료 단계에서 적음 (화면에서 고친 값은 localStorage에) |
 
 데모용: 발송 후 7일 넘게 도착 안 된 카드가 2건 있게 만든다.
 

@@ -149,30 +149,32 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 .board { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
 @media (min-width: 600px) { .board { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 960px) { .board { grid-template-columns: repeat(4, 1fr); } }
-.column { background: var(--line); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.column { background: var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .column h2 { margin: 2px 4px; font-size: 1rem; }
 .column h2 span { color: var(--muted); font-weight: 600; }
 
-.card { background: var(--surface); border: 3px solid transparent; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.card {
+  background: var(--surface); border: 3px solid transparent; border-radius: 10px; padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 1px; font-size: 0.9rem; line-height: 1.4;
+}
 .card.delayed { border-color: var(--yellow); }
-.card header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--muted); }
-.card .badge { background: var(--yellow-soft); color: var(--text); font-weight: 700; padding: 1px 6px; border-radius: 6px; }
+.card strong { font-size: 0.95rem; }
 .card p { margin: 0; }
-.card .meta, .card .note { font-size: 0.85rem; color: var(--muted); }
-.card button {
-  margin-top: 8px; padding: 8px; border: 0; border-radius: 8px; cursor: pointer;
-  background: var(--accent-soft); color: var(--accent); font-weight: 700;
+.card .meta, .card .note { font-size: 0.8rem; color: var(--muted); }
+.card .badge { margin-left: 6px; background: var(--yellow-soft); color: var(--text); font-weight: 700; padding: 0 6px; border-radius: 6px; }
+.card .feedback-text { margin-top: 2px; padding: 4px 6px; background: var(--bg); border-radius: 6px; font-size: 0.8rem; white-space: pre-wrap; }
+.card .feedback-text span { font-weight: 700; color: var(--muted); }
+
+.card .actions { display: flex; gap: 4px; margin-top: 6px; }
+.card button.small {
+  padding: 3px 10px; border: 0; border-radius: 6px; cursor: pointer;
+  font-size: 0.8rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
 }
-.card button.plain { background: transparent; color: var(--muted); border: 1px dashed var(--line); font-weight: 600; }
-.card button.feedback {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left;
-  background: var(--bg); color: var(--text); font-weight: 400; white-space: pre-wrap;
+.card button.small.plain { background: transparent; color: var(--muted); border: 1px dashed var(--muted); font-weight: 600; }
+.card button.small.next { margin-left: auto; }
+.text-edit { margin-top: 6px; }
+.text-edit textarea {
+  width: 100%; padding: 6px; border: 2px solid var(--accent); border-radius: 6px;
+  background: var(--surface); color: var(--text); font: inherit; font-size: 0.85rem; resize: vertical;
 }
-.card button.feedback span { font-size: 0.75rem; font-weight: 700; color: var(--muted); }
-.feedback-edit { margin-top: 8px; }
-.feedback-edit textarea {
-  width: 100%; padding: 8px; border: 2px solid var(--accent); border-radius: 8px;
-  background: var(--surface); color: var(--text); font: inherit; resize: vertical;
-}
-.feedback-edit .row { display: flex; gap: 6px; }
-.feedback-edit .row button { flex: 1; margin-top: 4px; }
+.text-edit .actions { margin-top: 2px; }

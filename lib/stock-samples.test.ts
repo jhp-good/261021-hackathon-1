@@ -35,8 +35,8 @@ describe("재고 신호등", () => {
 });
 
 describe("샘플 단계", () => {
-  it("포장 → 발송 → 도착 → 확인완료, 확인완료에서 더 안 감", () => {
-    expect([nextStage("포장"), nextStage("발송"), nextStage("도착"), nextStage("확인완료")]).toEqual(["발송", "도착", "확인완료", "확인완료"]);
+  it("발송 준비 → 발송 → 도착 → 확인완료, 확인완료에서 더 안 감", () => {
+    expect([nextStage("발송 준비"), nextStage("발송"), nextStage("도착"), nextStage("확인완료")]).toEqual(["발송", "도착", "확인완료", "확인완료"]);
   });
 
   it("발송 단계에서 7일 초과면 지연 (7일은 아님)", () => {

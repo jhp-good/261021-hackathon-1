@@ -103,7 +103,7 @@
     "productCode": "B01-300x76",
     "customer": "△△인테리어",
     "sentDate": "2026-10-21",
-    "stage": "포장",
+    "stage": "발송 준비",
     "note": "2장씩 포장",
     "feedback": ""
   },
@@ -112,7 +112,7 @@
     "productCode": "T01-290x57",
     "customer": "□□건축",
     "sentDate": "2026-10-21",
-    "stage": "포장",
+    "stage": "발송 준비",
     "note": "화이트 타일 비교용",
     "feedback": ""
   },
@@ -121,7 +121,7 @@
     "productCode": "B03-190x57",
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-20",
-    "stage": "포장",
+    "stage": "발송 준비",
     "note": "",
     "feedback": ""
   },
@@ -130,7 +130,7 @@
     "productCode": "T06-230x76",
     "customer": "☆☆리모델링",
     "sentDate": "2026-10-21",
-    "stage": "포장",
+    "stage": "발송 준비",
     "note": "레드와 함께 발송 예정",
     "feedback": ""
   }

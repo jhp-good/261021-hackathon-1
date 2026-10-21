@@ -22,10 +22,10 @@ const rows = [
   ["B06-230x57", "◇◇종합건설", "발송", 3, "화물 발송"],
   ["T05-230x76", "☆☆리모델링", "발송", 2, "그레이 두 가지 비교"],
   ["B05-290x48", "○○건설", "발송", 1, "얇은 규격 문의"],
-  ["B01-300x76", "△△인테리어", "포장", 0, "2장씩 포장"],
-  ["T01-290x57", "□□건축", "포장", 0, "화이트 타일 비교용"],
-  ["B03-190x57", "◇◇종합건설", "포장", 1, ""],
-  ["T06-230x76", "☆☆리모델링", "포장", 0, "레드와 함께 발송 예정"],
+  ["B01-300x76", "△△인테리어", "발송 준비", 0, "2장씩 포장"],
+  ["T01-290x57", "□□건축", "발송 준비", 0, "화이트 타일 비교용"],
+  ["B03-190x57", "◇◇종합건설", "발송 준비", 1, ""],
+  ["T06-230x76", "☆☆리모델링", "발송 준비", 0, "레드와 함께 발송 예정"],
 ];
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -51,7 +51,7 @@ const errors = [];
 if (samples.length !== 15) errors.push(`${samples.length}건 (15건이어야 함)`);
 for (const s of samples) {
   if (!codes.has(s.productCode)) errors.push(`${s.id}: 없는 품번 ${s.productCode}`);
-  if (!["포장", "발송", "도착", "확인완료"].includes(s.stage)) errors.push(`${s.id}: 단계 오류 ${s.stage}`);
+  if (!["발송 준비", "발송", "도착", "확인완료"].includes(s.stage)) errors.push(`${s.id}: 단계 오류 ${s.stage}`);
 }
 const delayed = rows.filter(([, , stage, ago]) => stage === "발송" && ago > 7).length;
 if (delayed !== 2) errors.push(`7일 지연 ${delayed}건 (2건이어야 함)`);

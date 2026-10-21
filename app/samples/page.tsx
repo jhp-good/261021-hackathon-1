@@ -10,9 +10,16 @@ const products = productData as Product[];
 const initial = sampleData as Sample[];
 const productOf = (code: string) => products.find((p) => p.code === code);
 
-// localStorage에는 바뀐 값만: { id: { stage?, sentDate?, feedback? } }
-const KEY = "rocket-quote:samples:v2";
-type Saved = Record<string, Partial<Pick<Sample, "stage" | "sentDate" | "feedback">>>;
+// localStorage에는 바뀐 값만: { id: { stage?, sentDate?, note?, feedback? } }
+const KEY = "rocket-quote:samples:v3";
+type Saved = Record<string, Partial<Pick<Sample, "stage" | "sentDate" | "note" | "feedback">>>;
+type TextField = "note" | "feedback";
+
+// 단계마다 적을 수 있는 글: 발송 준비 = 메모, 확인완료 = 피드백, 발송 · 도착 = 없음
+const EDITABLE: Partial<Record<Sample["stage"], { field: TextField; label: string }>> = {
+  "발송 준비": { field: "note", label: "메모" },
+  확인완료: { field: "feedback", label: "피드백" },
+};
 
 function load(): Saved {
   try {
@@ -55,22 +62,23 @@ export default function SamplesPage() {
   }
 
   function advance(s: Sample) {
-    // 포장 → 발송으로 넘길 때 발송일을 오늘로
-    update(s.id, { stage: nextStage(s.stage), sentDate: s.stage === "포장" ? toDateString(new Date()) : s.sentDate });
+    // 발송 준비 → 발송으로 넘길 때 발송일을 오늘로
+    update(s.id, { stage: nextStage(s.stage), sentDate: s.stage === "발송 준비" ? toDateString(new Date()) : s.sentDate });
+    if (editing === s.id) setEditing(null);
   }
 
-  function startEdit(s: Sample) {
+  function startEdit(s: Sample, field: TextField) {
     setEditing(s.id);
-    setDraft(s.feedback);
+    setDraft(s[field]);
   }
 
-  function saveFeedback(id: string) {
-    update(id, { feedback: draft.trim() });
+  function saveText(id: string, field: TextField) {
+    update(id, { [field]: draft.trim() });
     setEditing(null);
   }
 
   function reset() {
-    if (!confirm("모든 샘플을 처음 상태로 되돌릴까요? 적은 피드백도 지워집니다.")) return;
+    if (!confirm("모든 샘플을 처음 상태로 되돌릴까요? 적은 메모 · 피드백도 지워집니다.")) return;
     setSaved({});
     setEditing(null);
     store({});
@@ -88,6 +96,7 @@ export default function SamplesPage() {
       <div className="board">
         {STAGES.map((stage) => {
           const cards = samples.filter((s) => s.stage === stage);
+          const edit = EDITABLE[stage];
           return (
             <section key={stage} className="column" aria-label={stage}>
               <h2>{stage} <span>{cards.length}</span></h2>
@@ -97,34 +106,37 @@ export default function SamplesPage() {
                 const days = daysSince(s.sentDate, today);
                 return (
                   <article key={s.id} className={delayed ? "card delayed" : "card"}>
-                    <header>
-                      <span>{s.id}</span>
-                      {delayed && <span className="badge">발송 {days}일째</span>}
-                    </header>
                     <strong>{p ? `${p.name} ${face(p).length}×${face(p).height}` : s.productCode}</strong>
                     <p>{s.customer}</p>
-                    <p className="meta">{s.stage === "포장" ? "포장 중" : `발송 ${s.sentDate.slice(5)} · ${days}일 전`}</p>
+                    {stage !== "발송 준비" && (
+                      <p className="meta">
+                        발송 {s.sentDate.slice(5)} · {days}일 전
+                        {delayed && <span className="badge">지연</span>}
+                      </p>
+                    )}
                     {s.note && <p className="note">{s.note}</p>}
+                    {s.feedback && stage === "확인완료" && <p className="feedback-text"><span>피드백</span> {s.feedback}</p>}
 
-                    {editing === s.id ? (
-                      <div className="feedback-edit">
-                        <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={3}
-                          placeholder="거래처 피드백을 적어 주세요" aria-label={`${s.id} 피드백`} autoFocus />
-                        <div className="row">
-                          <button onClick={() => saveFeedback(s.id)}>저장</button>
-                          <button className="plain" onClick={() => setEditing(null)}>취소</button>
+                    {edit && editing === s.id ? (
+                      <div className="text-edit">
+                        <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={2}
+                          placeholder={`${edit.label}을 적어 주세요`} aria-label={`${s.id} ${edit.label}`} autoFocus />
+                        <div className="actions">
+                          <button className="small" onClick={() => saveText(s.id, edit.field)}>저장</button>
+                          <button className="small plain" onClick={() => setEditing(null)}>취소</button>
                         </div>
                       </div>
-                    ) : s.feedback ? (
-                      <button className="feedback" onClick={() => startEdit(s)} title="눌러서 수정">
-                        <span>피드백</span>{s.feedback}
-                      </button>
                     ) : (
-                      <button className="plain" onClick={() => startEdit(s)}>+ 피드백 적기</button>
-                    )}
-
-                    {s.stage !== "확인완료" && (
-                      <button onClick={() => advance(s)}>다음 단계 → {nextStage(s.stage)}</button>
+                      <div className="actions">
+                        {edit && (
+                          <button className="small plain" onClick={() => startEdit(s, edit.field)}>
+                            {s[edit.field] ? `${edit.label} 수정` : `+ ${edit.label} 추가`}
+                          </button>
+                        )}
+                        {stage !== "확인완료" && (
+                          <button className="small next" onClick={() => advance(s)}>{nextStage(stage)} →</button>
+                        )}
+                      </div>
                     )}
                   </article>
                 );
