@@ -69,14 +69,16 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 .field { display: block; margin-top: 20px; }
 .field h2, .field .label { display: block; margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); font-weight: 600; }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+/* 칸 폭을 똑같이 나눠 양 끝을 맞춘다 (auto-fit: 남는 칸 없이 늘림) */
+.chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
 .chips button {
-  padding: 10px 16px; font-weight: 700; cursor: pointer; white-space: nowrap;
-  background: var(--surface); border: 2px solid var(--line); border-radius: 999px;
+  padding: 10px 8px; font-weight: 700; cursor: pointer; white-space: nowrap; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis;
+  background: var(--surface); border: 2px solid var(--line); border-radius: 10px;
 }
 .chips button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 
-.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
 .products button {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0;
   padding: 10px 12px; text-align: left; cursor: pointer;
