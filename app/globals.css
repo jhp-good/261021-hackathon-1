@@ -80,7 +80,9 @@ main { max-width: 760px; margin: 0 auto; padding: 16px; }
 }
 .inputs input:focus { outline: none; border-color: var(--accent); }
 
+.inputs.with-floors { grid-template-columns: 2fr 1fr 1fr; }
 .hint { margin-top: 24px; color: var(--muted); text-align: center; }
+.hint.small { margin-top: 8px; font-size: 0.85rem; text-align: left; }
 .error { margin-top: 24px; padding: 12px; border-radius: 10px; color: var(--error); border: 2px solid var(--error); font-weight: 700; }
 
 .result { margin-top: 24px; padding: 16px; background: var(--surface); border: 2px solid var(--accent); border-radius: 14px; }

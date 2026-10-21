@@ -48,12 +48,13 @@ describe("추가 확인", () => {
     expect(r.ok && r.quote.required).toBe(110);
   });
 
-  it("평 → ㎡: 1평 = 3.3㎡", () => {
-    expect(toSqm(10, "pyeong")).toBeCloseTo(33, 10);
-    expect(toSqm(30, "sqm")).toBe(30);
-    // 붉은 벽돌 10평 = 33㎡ → 33 × 72 × 1.05 = 2,494.8 → 2,495장
-    const r = calcQuote(brick(null, 1300), toSqm(10, "pyeong"), 5);
-    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.loose]).toEqual([2495, 1, 1195]);
+  it("건물 평 → 외벽 ㎡: 30평 1층 = 100㎡, 층수만큼 곱한다", () => {
+    expect(toSqm(30, "pyeong")).toBe(100);
+    expect(toSqm(30, "pyeong", 2)).toBe(200);
+    expect(toSqm(30, "sqm", 2)).toBe(30); // ㎡ 입력은 층수 무시
+    // 붉은 벽돌 30평 1층 = 100㎡ → 100 × 72 × 1.05 = 7,560장 = 5파렛트 + 1,060장
+    const r = calcQuote(brick(null, 1300), toSqm(30, "pyeong"), 5);
+    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.loose]).toEqual([7560, 5, 1060]);
   });
 
   it("음수 로스율은 에러", () => {

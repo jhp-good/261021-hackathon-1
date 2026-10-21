@@ -16,12 +16,17 @@ export default function QuotePage() {
   const [code, setCode] = useState(firstOf("tile"));
   const [area, setArea] = useState("");
   const [unit, setUnit] = useState<AreaUnit>("sqm");
+  const [floors, setFloors] = useState("1");
   const [loss, setLoss] = useState(String(DEFAULT_LOSS.tile));
 
   const list = products.filter((p) => p.category === category);
   const product = list.find((p) => p.code === code) ?? list[0];
-  const sqm = toSqm(Number(area), unit);
-  const result = area.trim() === "" ? null : calcQuote(product, sqm, loss.trim() === "" ? NaN : Number(loss));
+  const floorsNum = Number(floors);
+  const floorsBad = unit === "pyeong" && !(Number.isInteger(floorsNum) && floorsNum >= 1);
+  const sqm = toSqm(Number(area), unit, floorsNum);
+  const result = area.trim() === "" ? null
+    : floorsBad ? { ok: false as const, error: "층수는 1 이상의 정수로 입력해 주세요." }
+    : calcQuote(product, sqm, loss.trim() === "" ? NaN : Number(loss));
 
   function switchTab(c: Category) {
     setCategory(c);
@@ -52,18 +57,25 @@ export default function QuotePage() {
         </div>
       </section>
 
-      <div className="inputs">
+      <div className={unit === "pyeong" ? "inputs with-floors" : "inputs"}>
         <div className="field">
           <div className="label-row">
-            <label className="label" htmlFor="area">면적</label>
+            <label className="label" htmlFor="area">{unit === "sqm" ? "면적" : "건물 평수"}</label>
             <div className="unit" role="group" aria-label="면적 단위">
               <button aria-pressed={unit === "sqm"} onClick={() => setUnit("sqm")}>㎡</button>
               <button aria-pressed={unit === "pyeong"} onClick={() => setUnit("pyeong")}>평</button>
             </div>
           </div>
-          <input id="area" type="number" inputMode="decimal" min="0" step="any" placeholder={unit === "sqm" ? "예: 30" : "예: 10"}
+          <input id="area" type="number" inputMode="decimal" min="0" step="any" placeholder="예: 30"
             value={area} onChange={(e) => setArea(e.target.value)} autoFocus />
         </div>
+        {unit === "pyeong" && (
+          <label className="field">
+            <span className="label">층수</span>
+            <input type="number" inputMode="numeric" min="1" step="1"
+              value={floors} onChange={(e) => setFloors(e.target.value)} />
+          </label>
+        )}
         <label className="field">
           <span className="label">로스율 (%)</span>
           <input type="number" inputMode="decimal" min="0" step="any"
@@ -71,13 +83,14 @@ export default function QuotePage() {
         </label>
       </div>
 
+      {unit === "pyeong" && <p className="hint small">건물 30평 1층 ≈ 외벽 100㎡ 기준으로 환산합니다.</p>}
       {result === null && <p className="hint">면적을 입력하면 바로 계산됩니다.</p>}
       {result && !result.ok && <p className="error" role="alert">{result.error}</p>}
       {result && result.ok && (
         <section className="result" aria-live="polite">
           <p className="result-head">
             {product.name} {product.size}mm · ㎡당 {Number.isInteger(result.quote.perSqm) ? "" : "약 "}
-            {formatNumber(Math.round(result.quote.perSqm))}장 · {unit === "pyeong" ? `${area}평(${formatNumber(sqm)}㎡)` : `${area}㎡`} · 로스 {loss}%
+            {formatNumber(Math.round(result.quote.perSqm))}장 · {unit === "pyeong" ? `${area}평 ${floors}층 → 외벽 ${Number.isInteger(sqm) ? "" : "약 "}${formatNumber(Math.round(sqm))}㎡` : `${area}㎡`} · 로스 {loss}%
           </p>
           {product.category === "brick" ? (
             <div className="stats single">
