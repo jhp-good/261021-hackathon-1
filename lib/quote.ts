@@ -27,6 +27,11 @@ export type QuoteResult = { ok: true; quote: Quote } | { ok: false; error: strin
 // 로스율 기본값(%)
 export const DEFAULT_LOSS: Record<Category, number> = { tile: 10, brick: 5 };
 
+// 면적 단위 — 1평 = 3.3㎡
+export type AreaUnit = "sqm" | "pyeong";
+export const SQM_PER_PYEONG = 3.3;
+export const toSqm = (value: number, unit: AreaUnit) => (unit === "pyeong" ? value * SQM_PER_PYEONG : value);
+
 // 벽돌 줄눈(mm) — 가로·세로에 각각 더한다
 export const BRICK_JOINT_MM = 12;
 

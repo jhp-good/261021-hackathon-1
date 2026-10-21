@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import data from "@/data/products.json";
-import { calcQuote, DEFAULT_LOSS, formatNumber, type Category, type Product } from "@/lib/quote";
+import { calcQuote, DEFAULT_LOSS, formatNumber, toSqm, type AreaUnit, type Category, type Product } from "@/lib/quote";
 
 const products = data as Product[];
 const TABS: { key: Category; label: string }[] = [
@@ -15,11 +15,13 @@ export default function QuotePage() {
   const [category, setCategory] = useState<Category>("tile");
   const [code, setCode] = useState(firstOf("tile"));
   const [area, setArea] = useState("");
+  const [unit, setUnit] = useState<AreaUnit>("sqm");
   const [loss, setLoss] = useState(String(DEFAULT_LOSS.tile));
 
   const list = products.filter((p) => p.category === category);
   const product = list.find((p) => p.code === code) ?? list[0];
-  const result = area.trim() === "" ? null : calcQuote(product, Number(area), loss.trim() === "" ? NaN : Number(loss));
+  const sqm = toSqm(Number(area), unit);
+  const result = area.trim() === "" ? null : calcQuote(product, sqm, loss.trim() === "" ? NaN : Number(loss));
 
   function switchTab(c: Category) {
     setCategory(c);
@@ -51,11 +53,17 @@ export default function QuotePage() {
       </section>
 
       <div className="inputs">
-        <label className="field">
-          <span className="label">면적 (㎡)</span>
-          <input type="number" inputMode="decimal" min="0" step="any" placeholder="예: 30"
+        <div className="field">
+          <div className="label-row">
+            <label className="label" htmlFor="area">면적</label>
+            <div className="unit" role="group" aria-label="면적 단위">
+              <button aria-pressed={unit === "sqm"} onClick={() => setUnit("sqm")}>㎡</button>
+              <button aria-pressed={unit === "pyeong"} onClick={() => setUnit("pyeong")}>평</button>
+            </div>
+          </div>
+          <input id="area" type="number" inputMode="decimal" min="0" step="any" placeholder={unit === "sqm" ? "예: 30" : "예: 10"}
             value={area} onChange={(e) => setArea(e.target.value)} autoFocus />
-        </label>
+        </div>
         <label className="field">
           <span className="label">로스율 (%)</span>
           <input type="number" inputMode="decimal" min="0" step="any"
@@ -69,7 +77,7 @@ export default function QuotePage() {
         <section className="result" aria-live="polite">
           <p className="result-head">
             {product.name} {product.size}mm · ㎡당 {Number.isInteger(result.quote.perSqm) ? "" : "약 "}
-            {formatNumber(Math.round(result.quote.perSqm))}장 · {area}㎡ · 로스 {loss}%
+            {formatNumber(Math.round(result.quote.perSqm))}장 · {unit === "pyeong" ? `${area}평(${formatNumber(sqm)}㎡)` : `${area}㎡`} · 로스 {loss}%
           </p>
           {product.category === "brick" ? (
             <div className="stats single">

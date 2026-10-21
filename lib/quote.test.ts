@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcQuote, formatNumber, piecesPerSqm, type Product } from "./quote";
+import { calcQuote, formatNumber, piecesPerSqm, toSqm, type Product } from "./quote";
 import products from "../data/products.json";
 
 const tile = (size: string, piecesPerPack: number): Product => ({
@@ -46,6 +46,14 @@ describe("추가 확인", () => {
   it("딱 떨어지는 값은 부동소수 오차로 한 장 더 올림하지 않는다 (100×1.1 = 110)", () => {
     const r = calcQuote(tile("100x100", 10), 1, 10);
     expect(r.ok && r.quote.required).toBe(110);
+  });
+
+  it("평 → ㎡: 1평 = 3.3㎡", () => {
+    expect(toSqm(10, "pyeong")).toBeCloseTo(33, 10);
+    expect(toSqm(30, "sqm")).toBe(30);
+    // 붉은 벽돌 10평 = 33㎡ → 33 × 72 × 1.05 = 2,494.8 → 2,495장
+    const r = calcQuote(brick(null, 1300), toSqm(10, "pyeong"), 5);
+    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.loose]).toEqual([2495, 1, 1195]);
   });
 
   it("음수 로스율은 에러", () => {
