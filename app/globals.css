@@ -16,6 +16,7 @@
   --shadow: 0 1px 2px rgba(42, 39, 35, 0.04), 0 4px 16px rgba(42, 39, 35, 0.05);
   --serif: "Noto Serif KR", "Nanum Myeongjo", serif;
   --radius: 6px;
+  color-scheme: light; /* 선택칸 · 숫자칸 같은 브라우저 기본 부품도 테마를 따르게 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,6 +35,7 @@
     --yellow-soft: #352d1a;
     --green: #8fb287;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+    color-scheme: dark;
   }
 }
 
@@ -49,7 +51,8 @@ body {
   overflow-x: hidden;
 }
 
-button, input { font: inherit; color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+option, optgroup { background: var(--surface); color: var(--text); }
 button { transition: border-color 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s; }
 
 main { max-width: 1200px; margin: 0 auto; padding: 16px; }
@@ -227,22 +230,24 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 .card {
   display: flex; flex-direction: column; overflow: hidden;
   background: var(--surface); border: 2px solid transparent; border-radius: var(--radius); box-shadow: var(--shadow);
-  font-size: 0.9rem; line-height: 1.45;
+  font-size: 0.9rem; line-height: 1.6;
 }
 .card.delayed { border-color: var(--yellow); }
 .card p { margin: 0; }
-.card-top { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 10px; }
-.card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.card-top { display: flex; flex-direction: column; gap: 6px; padding: 16px 16px 14px; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
 .card .company { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card .badge { flex: none; background: var(--yellow-soft); color: var(--text); font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 4px; }
 .card .product { font-size: 0.95rem; font-weight: 600; }
-.card .size-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.card .size-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 2px; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
+/* 아래 칸: 메모는 왼쪽 끝, 단추는 오른쪽 끝 */
 .card-memo {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px;
-  padding: 8px 10px 8px 14px; background: var(--bg); border-top: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-top: auto; padding: 12px 16px; background: var(--bg); border-top: 1px solid var(--line);
 }
-.memo-lines { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.card-memo > .small.next { flex: none; }
+.memo-lines { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .memo, .memo-edit { margin: 0; font-size: 0.8rem; color: var(--text); text-align: left; overflow-wrap: anywhere; }
 .memo span, .memo-edit span { margin-right: 6px; font-size: 0.72rem; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; }
 .memo-edit { padding: 2px 0; border: 0; background: transparent; cursor: pointer; white-space: pre-wrap; }
@@ -254,7 +259,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 }
 .card button.small.plain { color: var(--muted); border: 1px dashed var(--muted); font-weight: 500; }
 .card button.small.next { background: var(--accent); color: var(--surface); }
-.text-edit { grid-column: 1 / -1; }
+.text-edit { flex: 1; }
 .text-edit textarea {
   width: 100%; padding: 6px 8px; border: 1px solid var(--accent); border-radius: 4px;
   background: var(--surface); color: var(--text); font: inherit; font-size: 0.85rem; resize: vertical;
