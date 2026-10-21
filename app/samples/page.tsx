@@ -1,163 +1,24 @@
-"use client";
+// 샘플 보드 — 서버에서 DB를 읽어 보드에 넘긴다 (노트북 · 휴대폰이 같은 상태를 본다)
+import { db } from "@/lib/db";
+import { toSample } from "@/lib/samples-db";
+import Board from "./board";
 
-import { useEffect, useState } from "react";
-import productData from "@/data/products.json";
-import sampleData from "@/data/samples.json";
-import { face, type Product } from "@/lib/quote";
-import { daysSince, isDelayed, nextStage, STAGES, toDateString, type Sample } from "@/lib/samples";
+export const dynamic = "force-dynamic";
 
-const products = productData as Product[];
-const initial = sampleData as Sample[];
-const productOf = (code: string) => products.find((p) => p.code === code);
-
-// localStorage에는 바뀐 값만: { id: { stage?, sentDate?, note?, feedback? } }
-const KEY = "rocket-quote:samples:v3";
-type Saved = Record<string, Partial<Pick<Sample, "stage" | "sentDate" | "note" | "feedback">>>;
-type TextField = "note" | "feedback";
-
-// 단계마다 적을 수 있는 글: 발송 준비 = 메모, 확인완료 = 피드백, 발송 · 도착 = 없음
-const EDITABLE: Partial<Record<Sample["stage"], { field: TextField; label: string }>> = {
-  "발송 준비": { field: "note", label: "메모" },
-  확인완료: { field: "feedback", label: "피드백" },
-};
-
-function load(): Saved {
+export default async function SamplesPage() {
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? "{}");
-  } catch {
-    return {};
-  }
-}
-
-function store(saved: Saved) {
-  try {
-    if (Object.keys(saved).length) localStorage.setItem(KEY, JSON.stringify(saved));
-    else localStorage.removeItem(KEY);
-  } catch {
-    // 저장 못 해도 화면은 동작
-  }
-}
-
-export default function SamplesPage() {
-  const [saved, setSaved] = useState<Saved>({});
-  const [today, setToday] = useState<Date | null>(null);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [draft, setDraft] = useState("");
-
-  // 날짜 · localStorage는 브라우저에서만 읽는다
-  useEffect(() => {
-    setSaved(load());
-    setToday(new Date());
-  }, []);
-
-  if (!today) return <p className="hint">불러오는 중…</p>;
-
-  const samples = initial.map((s) => ({ ...s, ...saved[s.id] }));
-  const delayedCount = samples.filter((s) => isDelayed(s, today)).length;
-
-  function update(id: string, change: Saved[string]) {
-    const next = { ...saved, [id]: { ...saved[id], ...change } };
-    setSaved(next);
-    store(next);
-  }
-
-  function advance(s: Sample) {
-    // 발송 준비 → 발송으로 넘길 때 발송일을 오늘로
-    update(s.id, { stage: nextStage(s.stage), sentDate: s.stage === "발송 준비" ? toDateString(new Date()) : s.sentDate });
-    if (editing === s.id) setEditing(null);
-  }
-
-  function startEdit(s: Sample, field: TextField) {
-    setEditing(s.id);
-    setDraft(s[field]);
-  }
-
-  function saveText(id: string, field: TextField) {
-    update(id, { [field]: draft.trim() });
-    setEditing(null);
-  }
-
-  function reset() {
-    if (!confirm("모든 샘플을 처음 상태로 되돌릴까요? 적은 메모 · 피드백도 지워집니다.")) return;
-    setSaved({});
-    setEditing(null);
-    store({});
-  }
-
-  return (
-    <>
-      <div className="board-head">
+    const rows = await db().sample.findMany({ orderBy: { id: "asc" } });
+    return <Board samples={rows.map(toSample)} />;
+  } catch (e) {
+    const code = (e as { code?: string; errorCode?: string }).code ?? (e as { errorCode?: string }).errorCode;
+    return (
+      <section className="db-error">
+        <h2>샘플 DB에 연결하지 못했습니다{code ? ` (${code})` : ""}</h2>
         <p>
-          샘플 {samples.length}건 · <span className={delayedCount ? "warn" : ""}>7일 넘게 도착 안 됨 {delayedCount}건</span>
+          로컬이면 <code>.env</code>의 DATABASE_URL · DIRECT_URL을 확인하고 <code>npm run doctor:db</code>를 실행해 주세요.
+          배포 주소면 Vercel 환경 변수 DATABASE_URL을 넣은 뒤 Redeploy가 필요합니다.
         </p>
-        <button className="ghost" onClick={reset}>처음으로 되돌리기</button>
-      </div>
-
-      <div className="board">
-        {STAGES.map((stage) => {
-          const cards = samples.filter((s) => s.stage === stage);
-          const edit = EDITABLE[stage];
-          return (
-            <section key={stage} className="column" aria-label={stage}>
-              <h2>{stage} <span>{cards.length}</span></h2>
-              {cards.map((s) => {
-                const p = productOf(s.productCode);
-                const delayed = isDelayed(s, today);
-                const days = daysSince(s.sentDate, today);
-                return (
-                  <article key={s.id} className={delayed ? "card delayed" : "card"}>
-                    <div className="card-top">
-                      <div className="card-head">
-                        <b className="company">{s.customer}</b>
-                        {delayed && <span className="badge">지연</span>}
-                      </div>
-                      <strong className="product">{p?.name ?? s.productCode}</strong>
-                      <div className="size-row">
-                        <span>{p ? `${face(p).length}×${face(p).height}` : ""}</span>
-                        {stage !== "발송 준비" && <span>발송 {s.sentDate.slice(5)} · {days}일 전</span>}
-                      </div>
-                    </div>
-
-                    {/* 아래 칸: 메모(· 피드백) + 다음 단계 단추 */}
-                    <div className="card-memo">
-                      {edit && editing === s.id ? (
-                        <div className="text-edit">
-                          <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={2}
-                            placeholder={`${edit.label}을 적어 주세요`} aria-label={`${s.id} ${edit.label}`} autoFocus />
-                          <div className="actions">
-                            <button className="small" onClick={() => saveText(s.id, edit.field)}>저장</button>
-                            <button className="small plain" onClick={() => setEditing(null)}>취소</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          <div className="memo-lines">
-                            {edit?.field === "note" ? (
-                              <button className="memo-edit" onClick={() => startEdit(s, "note")} title="눌러서 메모 쓰기">
-                                <span>메모</span>{s.note || "+ 메모 추가"}
-                              </button>
-                            ) : (
-                              <p className="memo"><span>메모</span>{s.note || "없음"}</p>
-                            )}
-                            {edit?.field === "feedback" && (
-                              <button className="memo-edit" onClick={() => startEdit(s, "feedback")} title="눌러서 피드백 쓰기">
-                                <span>피드백</span>{s.feedback || "+ 피드백 추가"}
-                              </button>
-                            )}
-                          </div>
-                          {stage !== "확인완료" && (
-                            <button className="small next" onClick={() => advance(s)}>{nextStage(stage)} →</button>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
-            </section>
-          );
-        })}
-      </div>
-    </>
-  );
+      </section>
+    );
+  }
 }

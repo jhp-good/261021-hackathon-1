@@ -4,12 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
+    "postinstall": "prisma generate",
     "test": "vitest run",
-    "gen:data": "node scripts/gen-products.mjs && node scripts/gen-samples.mjs"
+    "gen:data": "node scripts/gen-products.mjs && node scripts/gen-samples.mjs",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "doctor:db": "node scripts/doctor-db.mjs"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "exceljs": "^4.4.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
@@ -21,7 +26,15 @@
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"
+  },
+  "allowScripts": {
+    "prisma@6.19.3": true,
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "esbuild@0.28.2": true
   }
 }

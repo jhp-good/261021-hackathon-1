@@ -21,15 +21,19 @@
 계산 규칙: ㎡당 장수 = 올림(1,000,000 / ((길이+12) × (높이+12))), 필요 장수 = 올림(면적 × ㎡당 장수 × (1 + 로스율)), 건물 30평 1층 ≈ 외벽 100㎡. 자세한 내용은 [spec/calc-rules.md](spec/calc-rules.md).
 
 ## 4. 데이터 · 규칙
-- 로그인 없음 · DB 없음 · 앱 안 AI 없음 · API 키 없음
+- 로그인 없음 · 앱 안 AI 없음 · API 키 없음
+- DB는 샘플 보드만: Supabase(PostgreSQL) + Prisma. 노트북에서 바꾸면 휴대폰에서도 같은 상태
 - 벽돌은 삼정세라믹 점토벽돌 22종(제품명 · 사진은 제공자 본인 자료), 규격 · 파렛트당 장수는 업계 표 기준
 - 재고 · 샘플 · 거래처는 전부 가상(○○건설 같은 이름, 연락처 없음)
 - 단가는 자주 바뀌므로 넣지 않는다 — 장수 계산 전용
-- 샘플 단계 · 메모 · 피드백은 이 브라우저(localStorage)에만 저장
 - 데이터 모양은 [spec/data-model.md](spec/data-model.md), 데이터는 `npm run gen:data`로 다시 만든다
 
 ```bash
 npm install
+cp .env.example .env   # Supabase → Connect → ORMs → Prisma 의 두 줄을 붙여 넣기
+npm run db:push        # Sample 표 만들기 (데이터 손실 질문은 N)
+npm run db:seed        # 샘플 15건 넣기 (두 번 돌려도 15건)
+npm run doctor:db      # 막히면 연결 점검
 npm run dev      # http://localhost:3000
 npm test         # 계산 규칙 테스트
 npm run build

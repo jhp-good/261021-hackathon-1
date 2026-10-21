@@ -4,6 +4,7 @@ import { daysSince, isDelayed, nextStage, STAGES, type Sample } from "./samples"
 import type { Product } from "./quote";
 import data from "../data/products.json";
 import samples from "../data/samples.json";
+import { toDate, toSample } from "./samples-db";
 
 const products = data as Product[];
 const find = (name: string, size: string) => products.find((p) => p.name === name && p.size === size)!;
@@ -60,5 +61,12 @@ describe("샘플 단계", () => {
       expect(STAGES).toContain(s.stage);
       expect(typeof s.feedback).toBe("string");
     }
+  });
+});
+
+describe("샘플 DB 행 → 화면용", () => {
+  it("날짜는 YYYY-MM-DD, 빈 메모 · 피드백은 빈 글, 모르는 단계는 발송 준비", () => {
+    const row = { id: "S-99", productCode: "B01-190x57", customer: "○○건설", sentDate: toDate("2026-10-12"), stage: "엉뚱", note: null, feedback: "좋음", updatedAt: new Date() };
+    expect(toSample(row)).toEqual({ id: "S-99", productCode: "B01-190x57", customer: "○○건설", sentDate: "2026-10-12", stage: "발송 준비", note: "", feedback: "좋음" });
   });
 });

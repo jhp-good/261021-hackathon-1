@@ -1,0 +1,21 @@
+// 샘플 보드만 DB(Supabase PostgreSQL)에 둔다. 제품 · 재고는 data/products.json
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // 풀러 6543 (앱 · Vercel)
+  directUrl = env("DIRECT_URL") // 직접 5432 (db push 때만)
+}
+
+model Sample {
+  id          String   @id
+  productCode String
+  customer    String
+  sentDate    DateTime @db.Date
+  stage       String // 발송 준비 · 발송 · 도착 · 확인완료
+  note        String?
+  feedback    String?
+  updatedAt   DateTime @updatedAt
+}

@@ -266,6 +266,12 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 }
 .text-edit .actions { display: flex; gap: 4px; margin-top: 4px; justify-content: flex-end; }
 
+/* 샘플 DB 연결 안내 */
+.db-error { max-width: 640px; margin: 48px auto; padding: 20px 24px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--error); border-radius: var(--radius); }
+.db-error h2 { margin: 0 0 8px; font-family: var(--serif); font-size: 1.1rem; }
+.db-error p { margin: 0; color: var(--muted); line-height: 1.7; }
+code { padding: 1px 6px; background: var(--accent-soft); border-radius: 4px; font-size: 0.9em; }
+
 /* 휴대폰 */
 @media (max-width: 599px) {
   main { padding: 12px; }

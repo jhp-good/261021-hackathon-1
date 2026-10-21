@@ -20,7 +20,9 @@
 
 데모용: 재고 빨강 3개, 노랑 3개가 되도록 값을 맞춘다.
 
-## data/samples.json — 15건
+## data/samples.json — 15건 (Supabase Sample 표의 처음 값 = seed)
+화면은 DB의 Sample 표(prisma/schema.prisma)를 읽고 쓴다. 이 파일은 `npm run db:seed`와 '처음으로 되돌리기'가 쓰는 처음 상태.
+
 | 칸 | 타입 | 설명 |
 | --- | --- | --- |
 | id | string | `S-01` … |
