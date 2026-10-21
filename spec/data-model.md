@@ -8,7 +8,7 @@
 | name | string | 품명 (가상) |
 | size | string | mm. 타일 `"600x600"`, 벽돌 `"190x90x57"` |
 | pricePerPiece | number | 장당 단가(원, VAT 포함, **가상 값**) |
-| piecesPerSqm | number \| null | 벽돌만 직접 값(예 75). 타일은 null → 규격으로 계산 |
+| piecesPerSqm | number \| null | 보통 null → 규격으로 계산(벽돌은 줄눈 12mm). 직접 값이 있으면 우선 |
 | packUnit | "박스" \| "파렛트" | 타일=박스, 벽돌=파렛트 |
 | piecesPerPack | number | 박스·파렛트당 장수 |
 | stock | number | 현재 재고(장) |

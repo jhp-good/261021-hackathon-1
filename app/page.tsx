@@ -68,7 +68,7 @@ export default function QuotePage() {
       {result && result.ok && (
         <section className="result" aria-live="polite">
           <p className="result-head">
-            {product.name} {product.size}mm · ㎡당 {product.category === "tile" ? "약 " : ""}
+            {product.name} {product.size}mm · ㎡당 {Number.isInteger(result.quote.perSqm) ? "" : "약 "}
             {result.quote.perSqm.toLocaleString("ko-KR", { maximumFractionDigits: 2 })}장 · {area}㎡ · 로스 {loss}%
           </p>
           <div className="stats">

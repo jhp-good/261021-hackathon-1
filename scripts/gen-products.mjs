@@ -18,14 +18,14 @@ const tiles = [
 ];
 
 // 벽돌: 규격 · 파렛트당 장수는 실제 업계 표 기준, 이름 · 단가 · 재고는 가상
-// ㎡당 장수는 줄눈 10mm 포함 추정치: 1,000,000 / ((길이+10) × (높이+10)) 반올림 — 현장 값 확인 필요
+// ㎡당 장수는 null → lib/quote.ts가 규격 + 줄눈 12mm로 계산
 const bricks = [
-  ["B-201", "붉은 벽돌", "190x90x57", 420, 75, 1300, 13000, 3900],
-  ["B-202", "고벽돌 브라운", "230x90x57", 680, 62, 1105, 6500, 2500],
-  ["B-203", "백고벽돌", "190x90x57", 720, 75, 1300, 1200, 2000],
-  ["B-211", "점토벽돌 다크그레이", "230x90x76", 850, 48, 680, 2800, 2400],
-  ["B-221", "롱브릭 아이보리", "290x90x57", 1100, 50, 936, 2500, 1000],
-  ["B-231", "와이드 브릭 그레이", "300x90x76", 1300, 38, 480, 2400, 960],
+  ["B-201", "붉은 벽돌", "190x90x57", 420, null, 1300, 13000, 3900],
+  ["B-202", "고벽돌 브라운", "230x90x57", 680, null, 1105, 6500, 2500],
+  ["B-203", "백고벽돌", "190x90x57", 720, null, 1300, 1200, 2000],
+  ["B-211", "점토벽돌 다크그레이", "230x90x76", 850, null, 680, 2800, 2400],
+  ["B-221", "롱브릭 아이보리", "290x90x57", 1100, null, 936, 2500, 1000],
+  ["B-231", "와이드 브릭 그레이", "300x90x76", 1300, null, 480, 2400, 960],
 ];
 
 const toProduct = (category) => ([code, name, size, pricePerPiece, piecesPerSqm, piecesPerPack, stock, reorderPoint]) => ({
@@ -52,8 +52,8 @@ if (new Set(products.map((p) => p.code)).size !== products.length) errors.push("
 if (count("red") !== 3) errors.push(`빨강 ${count("red")}개 (3개여야 함)`);
 if (count("yellow") !== 3) errors.push(`노랑 ${count("yellow")}개 (3개여야 함)`);
 for (const p of products) {
-  if (p.category === "tile" && p.piecesPerSqm !== null) errors.push(`${p.code}: 타일 piecesPerSqm은 null`);
-  if (p.category === "brick" && !(p.piecesPerSqm > 0)) errors.push(`${p.code}: 벽돌 piecesPerSqm 필요`);
+  const dims = p.size.split("x").map(Number);
+  if (dims.length !== (p.category === "tile" ? 2 : 3) || !dims.every((d) => d > 0)) errors.push(`${p.code}: 규격 형식 오류 ${p.size}`);
 }
 if (errors.length) {
   console.error(errors.join("\n"));

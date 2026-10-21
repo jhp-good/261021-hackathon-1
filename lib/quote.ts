@@ -8,7 +8,7 @@ export type Product = {
   name: string;
   size: string; // mm, 타일 "600x600" · 벽돌 "190x90x57"
   pricePerPiece: number; // 원, VAT 포함
-  piecesPerSqm: number | null; // 벽돌만 직접 값, 타일은 null
+  piecesPerSqm: number | null; // 직접 값이 있으면 우선, null이면 규격으로 계산
   packUnit: "박스" | "파렛트";
   piecesPerPack: number;
   stock: number;
@@ -28,13 +28,16 @@ export type QuoteResult = { ok: true; quote: Quote } | { ok: false; error: strin
 // 로스율 기본값(%)
 export const DEFAULT_LOSS: Record<Category, number> = { tile: 10, brick: 5 };
 
+// 벽돌 줄눈(mm) — 가로·세로에 각각 더한다
+export const BRICK_JOINT_MM = 12;
+
+// ㎡당 장수 — 타일: 1,000,000 / (가로 × 세로), 벽돌: 1,000,000 / ((길이+12) × (높이+12))
 export function piecesPerSqm(p: Product): number {
-  if (p.category === "brick") {
-    if (!p.piecesPerSqm) throw new Error(`${p.code}: 벽돌은 piecesPerSqm 값이 필요합니다`);
-    return p.piecesPerSqm;
-  }
-  const [w, h] = p.size.split("x").map(Number);
-  return 1_000_000 / (w * h);
+  if (p.piecesPerSqm) return p.piecesPerSqm;
+  const dims = p.size.split("x").map(Number);
+  if (p.category === "tile") return 1_000_000 / (dims[0] * dims[1]);
+  const [length, , height] = dims; // 벽돌 "길이x폭x높이" — 보이는 면은 길이 × 높이
+  return 1_000_000 / ((length + BRICK_JOINT_MM) * (height + BRICK_JOINT_MM));
 }
 
 // 부동소수 오차로 110.00000000000001 같은 값이 111로 올림되지 않게 한다
