@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { calcQuote, formatWon, piecesPerSqm, type Product } from "./quote";
+import { calcQuote, formatNumber, piecesPerSqm, type Product } from "./quote";
 import products from "../data/products.json";
 
-const tile = (size: string, piecesPerPack: number, pricePerPiece = 1000): Product => ({
-  code: "T-TEST", category: "tile", name: "테스트 타일", size, pricePerPiece,
+const tile = (size: string, piecesPerPack: number): Product => ({
+  code: "T-TEST", category: "tile", name: "테스트 타일", size,
   piecesPerSqm: null, packUnit: "박스", piecesPerPack, stock: 0, reorderPoint: 0,
 });
 
-const brick = (perSqm: number, piecesPerPack: number, pricePerPiece = 400): Product => ({
-  code: "B-TEST", category: "brick", name: "테스트 벽돌", size: "190x90x57", pricePerPiece,
+const brick = (perSqm: number | null, piecesPerPack: number, size = "190x90x57"): Product => ({
+  code: "B-TEST", category: "brick", name: "테스트 벽돌", size,
   piecesPerSqm: perSqm, packUnit: "파렛트", piecesPerPack, stock: 0, reorderPoint: 0,
 });
 
@@ -16,13 +16,11 @@ describe("calc-rules.md 테스트", () => {
   it("타일 600x600, 20㎡, 로스 10%, 박스 4장 → 62장 · 16박스 · 64장", () => {
     const p = tile("600x600", 4);
     expect(piecesPerSqm(p)).toBeCloseTo(2.7778, 4);
-    const r = calcQuote(p, 20, 10);
-    expect(r).toEqual({ ok: true, quote: expect.objectContaining({ required: 62, packs: 16, orderPieces: 64, total: 64_000 }) });
+    expect(calcQuote(p, 20, 10)).toEqual({ ok: true, quote: expect.objectContaining({ required: 62, packs: 16, orderPieces: 64 }) });
   });
 
   it("벽돌 ㎡당 75장, 30㎡, 로스 5%, 파렛트 500장 → 2,363장 · 5파렛트 · 2,500장", () => {
-    const r = calcQuote(brick(75, 500), 30, 5);
-    expect(r).toEqual({ ok: true, quote: expect.objectContaining({ required: 2363, packs: 5, orderPieces: 2500, total: 1_000_000 }) });
+    expect(calcQuote(brick(75, 500), 30, 5)).toEqual({ ok: true, quote: expect.objectContaining({ required: 2363, packs: 5, orderPieces: 2500 }) });
   });
 
   it("벽돌 경계값: 면적 0 또는 음수는 에러 메시지", () => {
@@ -35,10 +33,10 @@ describe("calc-rules.md 테스트", () => {
 });
 
 describe("추가 확인", () => {
-  it("벽돌 ㎡당 장수 = 1,000,000 / ((길이+12) × (높이+12))", () => {
-    const b = { ...brick(75, 1300), piecesPerSqm: null };
-    expect(piecesPerSqm(b)).toBeCloseTo(1_000_000 / (202 * 69), 10); // 190x90x57 → 약 71.75장
-    expect(piecesPerSqm({ ...b, size: "230x90x76" })).toBeCloseTo(1_000_000 / (242 * 88), 10);
+  it("벽돌 ㎡당 장수 = 올림(1,000,000 / ((길이+12) × (높이+12))) — 폭은 안 씀", () => {
+    expect(piecesPerSqm(brick(null, 1300))).toBe(72); // 1,000,000 / (202 × 69) = 71.75 → 72
+    expect(piecesPerSqm(brick(null, 680, "230x90x76"))).toBe(47); // 1,000,000 / (242 × 88) = 46.96 → 47
+    expect(piecesPerSqm(brick(null, 680, "230x200x76"))).toBe(47); // 폭이 달라도 같다
   });
 
   it("piecesPerSqm 직접 값이 있으면 그 값을 우선한다", () => {
@@ -54,13 +52,13 @@ describe("추가 확인", () => {
     expect(calcQuote(brick(75, 500), 30, -5).ok).toBe(false);
   });
 
-  it("금액은 천 단위 쉼표, 원 단위", () => {
-    expect(formatWon(1_050_000)).toBe("1,050,000원");
+  it("장수는 천 단위 쉼표", () => {
+    expect(formatNumber(2268)).toBe("2,268");
   });
 
-  it("데모 장면: products.json의 붉은 벽돌 190x90x57(파렛트 1,300장) 30㎡ → 2,261장 · 2파렛트 · 2,600장", () => {
+  it("데모 장면: products.json의 붉은 벽돌 190x90x57(파렛트 1,300장) 30㎡ → 2,268장 · 2파렛트 · 2,600장", () => {
     const red = (products as Product[]).find((p) => p.name === "붉은 벽돌")!;
-    const r = calcQuote(red, 30, 5); // 30 × 71.746… × 1.05 = 2,260.01 → 2,261
-    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.orderPieces]).toEqual([2261, 2, 2600]);
+    const r = calcQuote(red, 30, 5); // 30 × 72 × 1.05 = 2,268
+    expect(r.ok && [r.quote.perSqm, r.quote.required, r.quote.packs, r.quote.orderPieces]).toEqual([72, 2268, 2, 2600]);
   });
 });

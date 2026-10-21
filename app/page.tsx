@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import data from "@/data/products.json";
-import { calcQuote, DEFAULT_LOSS, formatNumber, formatWon, type Category, type Product } from "@/lib/quote";
+import { calcQuote, DEFAULT_LOSS, formatNumber, type Category, type Product } from "@/lib/quote";
 
 const products = data as Product[];
 const TABS: { key: Category; label: string }[] = [
@@ -44,7 +44,7 @@ export default function QuotePage() {
             <button key={p.code} aria-pressed={p.code === product.code} onClick={() => setCode(p.code)}>
               <strong>{p.name}</strong>
               <span>{p.code} · {p.size}mm</span>
-              <span>{formatWon(p.pricePerPiece)}/장</span>
+              <span>{p.packUnit}당 {formatNumber(p.piecesPerPack)}장</span>
             </button>
           ))}
         </div>
@@ -69,7 +69,7 @@ export default function QuotePage() {
         <section className="result" aria-live="polite">
           <p className="result-head">
             {product.name} {product.size}mm · ㎡당 {Number.isInteger(result.quote.perSqm) ? "" : "약 "}
-            {result.quote.perSqm.toLocaleString("ko-KR", { maximumFractionDigits: 2 })}장 · {area}㎡ · 로스 {loss}%
+            {formatNumber(Math.round(result.quote.perSqm))}장 · {area}㎡ · 로스 {loss}%
           </p>
           <div className="stats">
             <div><span>필요 장수</span><b>{formatNumber(result.quote.required)}장</b></div>
@@ -78,11 +78,9 @@ export default function QuotePage() {
               <b>{formatNumber(result.quote.packs)}{product.packUnit}</b>
               <small>{product.packUnit}당 {formatNumber(product.piecesPerPack)}장</small>
             </div>
-            <div><span>주문 장수</span><b>{formatNumber(result.quote.orderPieces)}장</b></div>
-            <div className="total">
-              <span>합계 (VAT 포함)</span>
-              <b>{formatWon(result.quote.total)}</b>
-              <small>장당 {formatWon(product.pricePerPiece)}</small>
+            <div className="hero">
+              <span>주문 장수</span>
+              <b>{formatNumber(result.quote.orderPieces)}장</b>
             </div>
           </div>
         </section>

@@ -1,40 +1,40 @@
 // data/products.json 생성 — 가상 제품 14종 (타일 8, 벽돌 6)
 // 실행: npm run gen:data
 // 규칙: spec/data-model.md · 재고 신호등은 spec/calc-rules.md (빨강 3, 노랑 3이 되게 맞춤)
+// 단가는 자주 바뀌므로 넣지 않는다 — 장수 계산 전용
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// [code, name, size, pricePerPiece, piecesPerSqm, piecesPerPack, stock, reorderPoint]
+// [code, name, size, piecesPerPack, stock, reorderPoint]
 const tiles = [
-  ["T-601", "라이트그레이 포세린", "600x600", 6800, null, 4, 1600, 400],
-  ["T-602", "마블 화이트 폴리싱", "600x1200", 18500, null, 2, 30, 80],
-  ["T-301", "샌드 베이지 벽타일", "300x600", 2900, null, 8, 900, 800],
-  ["T-302", "무광 차콜 바닥타일", "300x300", 1200, null, 11, 2200, 600],
-  ["T-801", "콘크리트룩 대형", "800x800", 13000, null, 3, 300, 150],
-  ["T-401", "테라코타 데코", "400x400", 3200, null, 6, 120, 300],
-  ["T-201", "유광 화이트 벽타일", "200x200", 900, null, 25, 5000, 1500],
-  ["T-101", "서브웨이 화이트", "100x300", 650, null, 30, 1500, 1200],
+  ["T-601", "라이트그레이 포세린", "600x600", 4, 1600, 400],
+  ["T-602", "마블 화이트 폴리싱", "600x1200", 2, 30, 80],
+  ["T-301", "샌드 베이지 벽타일", "300x600", 8, 900, 800],
+  ["T-302", "무광 차콜 바닥타일", "300x300", 11, 2200, 600],
+  ["T-801", "콘크리트룩 대형", "800x800", 3, 300, 150],
+  ["T-401", "테라코타 데코", "400x400", 6, 120, 300],
+  ["T-201", "유광 화이트 벽타일", "200x200", 25, 5000, 1500],
+  ["T-101", "서브웨이 화이트", "100x300", 30, 1500, 1200],
 ];
 
-// 벽돌: 규격 · 파렛트당 장수는 실제 업계 표 기준, 이름 · 단가 · 재고는 가상
-// ㎡당 장수는 null → lib/quote.ts가 규격 + 줄눈 12mm로 계산
+// 벽돌: 규격 · 파렛트당 장수는 실제 업계 표 기준, 이름 · 재고는 가상
+// ㎡당 장수는 null → lib/quote.ts가 규격 + 줄눈 12mm로 계산(올림)
 const bricks = [
-  ["B-201", "붉은 벽돌", "190x90x57", 420, null, 1300, 13000, 3900],
-  ["B-202", "고벽돌 브라운", "230x90x57", 680, null, 1105, 6500, 2500],
-  ["B-203", "백고벽돌", "190x90x57", 720, null, 1300, 1200, 2000],
-  ["B-211", "점토벽돌 다크그레이", "230x90x76", 850, null, 680, 2800, 2400],
-  ["B-221", "롱브릭 아이보리", "290x90x57", 1100, null, 936, 2500, 1000],
-  ["B-231", "와이드 브릭 그레이", "300x90x76", 1300, null, 480, 2400, 960],
+  ["B-201", "붉은 벽돌", "190x90x57", 1300, 13000, 3900],
+  ["B-202", "고벽돌 브라운", "230x90x57", 1105, 6500, 2500],
+  ["B-203", "백고벽돌", "190x90x57", 1300, 1200, 2000],
+  ["B-211", "점토벽돌 다크그레이", "230x90x76", 680, 2800, 2400],
+  ["B-221", "롱브릭 아이보리", "290x90x57", 936, 2500, 1000],
+  ["B-231", "와이드 브릭 그레이", "300x90x76", 480, 2400, 960],
 ];
 
-const toProduct = (category) => ([code, name, size, pricePerPiece, piecesPerSqm, piecesPerPack, stock, reorderPoint]) => ({
+const toProduct = (category) => ([code, name, size, piecesPerPack, stock, reorderPoint]) => ({
   code,
   category,
   name,
   size,
-  pricePerPiece,
-  piecesPerSqm,
+  piecesPerSqm: null,
   packUnit: category === "tile" ? "박스" : "파렛트",
   piecesPerPack,
   stock,
