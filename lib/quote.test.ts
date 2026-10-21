@@ -19,8 +19,8 @@ describe("calc-rules.md 테스트", () => {
     expect(calcQuote(p, 20, 10)).toEqual({ ok: true, quote: expect.objectContaining({ required: 62, packs: 16, orderPieces: 64 }) });
   });
 
-  it("벽돌 ㎡당 75장, 30㎡, 로스 5%, 파렛트 500장 → 2,363장 · 5파렛트 · 2,500장", () => {
-    expect(calcQuote(brick(75, 500), 30, 5)).toEqual({ ok: true, quote: expect.objectContaining({ required: 2363, packs: 5, orderPieces: 2500 }) });
+  it("벽돌 ㎡당 75장, 30㎡, 로스 5%, 파렛트 500장 → 2,363장 = 4파렛트 + 363장 (파렛트는 올림 안 함)", () => {
+    expect(calcQuote(brick(75, 500), 30, 5)).toEqual({ ok: true, quote: expect.objectContaining({ required: 2363, packs: 4, loose: 363, orderPieces: 2363 }) });
   });
 
   it("벽돌 경계값: 면적 0 또는 음수는 에러 메시지", () => {
@@ -56,9 +56,13 @@ describe("추가 확인", () => {
     expect(formatNumber(2268)).toBe("2,268");
   });
 
-  it("데모 장면: products.json의 붉은 벽돌 190x90x57(파렛트 1,300장) 30㎡ → 2,268장 · 2파렛트 · 2,600장", () => {
+  it("벽돌이 파렛트에 딱 맞으면 낱장 0", () => {
+    expect(calcQuote(brick(100, 500), 10, 0)).toEqual({ ok: true, quote: expect.objectContaining({ required: 1000, packs: 2, loose: 0 }) });
+  });
+
+  it("데모 장면: products.json의 붉은 벽돌 190x90x57(파렛트 1,300장) 30㎡ → 2,268장 = 1파렛트 + 968장", () => {
     const red = (products as Product[]).find((p) => p.name === "붉은 벽돌")!;
     const r = calcQuote(red, 30, 5); // 30 × 72 × 1.05 = 2,268
-    expect(r.ok && [r.quote.perSqm, r.quote.required, r.quote.packs, r.quote.orderPieces]).toEqual([72, 2268, 2, 2600]);
+    expect(r.ok && [r.quote.perSqm, r.quote.required, r.quote.packs, r.quote.loose]).toEqual([72, 2268, 1, 968]);
   });
 });

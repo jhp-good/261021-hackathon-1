@@ -17,8 +17,9 @@ export type Product = {
 export type Quote = {
   perSqm: number; // ㎡당 장수
   required: number; // 필요 장수
-  packs: number; // 포장 수
-  orderPieces: number; // 주문 장수
+  packs: number; // 포장 수 — 타일: 올림 박스 수, 벽돌: 꽉 찬 파렛트 수
+  loose: number; // 벽돌: 파렛트에 못 채운 낱장 (타일은 0)
+  orderPieces: number; // 주문 장수 — 타일: 박스 × 장수, 벽돌: 필요 장수 그대로
 };
 
 export type QuoteResult = { ok: true; quote: Quote } | { ok: false; error: string };
@@ -47,8 +48,12 @@ export function calcQuote(p: Product, areaSqm: number, lossPct: number): QuoteRe
 
   const perSqm = piecesPerSqm(p);
   const required = ceil(areaSqm * perSqm * (1 + lossPct / 100));
+  if (p.category === "brick") {
+    const packs = Math.floor(required / p.piecesPerPack);
+    return { ok: true, quote: { perSqm, required, packs, loose: required - packs * p.piecesPerPack, orderPieces: required } };
+  }
   const packs = Math.ceil(required / p.piecesPerPack);
-  return { ok: true, quote: { perSqm, required, packs, orderPieces: packs * p.piecesPerPack } };
+  return { ok: true, quote: { perSqm, required, packs, loose: 0, orderPieces: packs * p.piecesPerPack } };
 }
 
 export const formatNumber = (n: number) => n.toLocaleString("ko-KR");

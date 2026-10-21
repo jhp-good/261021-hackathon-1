@@ -71,18 +71,33 @@ export default function QuotePage() {
             {product.name} {product.size}mm · ㎡당 {Number.isInteger(result.quote.perSqm) ? "" : "약 "}
             {formatNumber(Math.round(result.quote.perSqm))}장 · {area}㎡ · 로스 {loss}%
           </p>
-          <div className="stats">
-            <div><span>필요 장수</span><b>{formatNumber(result.quote.required)}장</b></div>
-            <div>
-              <span>포장 수</span>
-              <b>{formatNumber(result.quote.packs)}{product.packUnit}</b>
-              <small>{product.packUnit}당 {formatNumber(product.piecesPerPack)}장</small>
+          {product.category === "brick" ? (
+            <div className="stats single">
+              <div><span>필요 장수</span><b>{formatNumber(result.quote.required)}장</b></div>
+              <div className="hero">
+                <span>파렛트</span>
+                <b>
+                  {result.quote.packs > 0 && `${formatNumber(result.quote.packs)}파렛트`}
+                  {result.quote.packs > 0 && result.quote.loose > 0 && " + "}
+                  {(result.quote.loose > 0 || result.quote.packs === 0) && `${formatNumber(result.quote.loose)}장`}
+                </b>
+                <small>파렛트당 {formatNumber(product.piecesPerPack)}장</small>
+              </div>
             </div>
-            <div className="hero">
-              <span>주문 장수</span>
-              <b>{formatNumber(result.quote.orderPieces)}장</b>
+          ) : (
+            <div className="stats">
+              <div><span>필요 장수</span><b>{formatNumber(result.quote.required)}장</b></div>
+              <div>
+                <span>포장 수</span>
+                <b>{formatNumber(result.quote.packs)}{product.packUnit}</b>
+                <small>{product.packUnit}당 {formatNumber(product.piecesPerPack)}장</small>
+              </div>
+              <div className="hero">
+                <span>주문 장수</span>
+                <b>{formatNumber(result.quote.orderPieces)}장</b>
+              </div>
             </div>
-          </div>
+          )}
         </section>
       )}
     </>
