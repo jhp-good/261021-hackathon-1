@@ -161,25 +161,24 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 .dot.yellow { background: var(--yellow); }
 .dot.green { background: var(--green); }
 
-.signal-summary { margin: 24px 0 14px; }
-.red-count { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 1.3rem; font-weight: 600; }
-.red-count .dot { width: 18px; height: 18px; }
-.red-count b { font-family: var(--serif); font-size: 2.6rem; font-weight: 600; color: var(--red); }
-.signal-summary .sub { margin: 4px 0 0; color: var(--muted); }
 
-/* 재고 검색 */
+/* 재고 검색 — 두 칸씩 같은 폭, 라벨 · 입력 높이 통일 */
 .stock-search {
-  display: grid; gap: 10px; padding: 16px; margin-bottom: 16px;
+  display: grid; gap: 14px; padding: 18px; margin: 20px 0 16px;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
 }
-.search-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center; }
-.search-row:nth-child(2) { grid-template-columns: 150px minmax(0, 1fr) 150px; }
-.search-row input {
+.pick-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.pick-row label, .pick-row > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.need-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
+.stock-search select, .stock-search input {
   width: 100%; height: 44px; padding: 0 12px; font-size: 1rem;
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
 }
-.search-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.need-label { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.04em; }
+.stock-search select { appearance: none; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 19px, calc(100% - 13px) 19px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+.stock-search select:focus, .stock-search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.need-input { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 8px; }
 .seg { display: grid; grid-template-columns: 1fr 1fr; height: 44px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .seg button { border: 0; background: transparent; color: var(--muted); font-weight: 600; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
@@ -188,8 +187,10 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
   background: var(--accent); color: var(--surface); font-weight: 600; font-size: 1rem; letter-spacing: 0.2em;
 }
 .result-count { margin: 0 0 10px; color: var(--muted); font-size: 0.9rem; }
+.stock-group { margin-bottom: 18px; }
+.stock-group h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.03em; }
+.stock-group h3 span { color: var(--muted); font-weight: 500; font-size: 0.9rem; margin-left: 4px; }
 .stock-row .ref.ok { color: var(--green); font-weight: 600; }
-.stock-row .ref.short { color: var(--red); font-weight: 600; }
 
 .stock-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .stock-row {
@@ -259,12 +260,9 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
   .size-card { padding: 12px 14px; }
   .size-card strong { font-size: 1.2rem; }
   .product-card span { padding: 6px; font-size: 0.9rem; }
-  .red-count b { font-size: 2.2rem; }
   .stock-row { padding: 10px 12px; }
   .stock-row .code { display: none; }
-  .search-row { grid-template-columns: 1fr; }
-  .search-row:nth-child(2) { grid-template-columns: minmax(0, 1fr) 120px; }
-  .need-label { grid-column: 1 / -1; }
+  .pick-row { grid-template-columns: 1fr; gap: 12px; }
 }
 
 /* 인쇄 — A4 한 장, 견적서만 */

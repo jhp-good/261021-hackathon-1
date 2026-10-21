@@ -1,5 +1,5 @@
 // 재고 신호등 · 재고 검색 — 규칙은 spec/calc-rules.md
-import { calcQuote, DEFAULT_LOSS, face, type Product } from "./quote";
+import { calcQuote, DEFAULT_LOSS, type Product } from "./quote";
 
 export type Signal = "red" | "yellow" | "green";
 
@@ -18,22 +18,16 @@ export function stockSignal(p: Pick<Product, "stock" | "piecesPerPack">): Signal
   return "green";
 }
 
-// 검색 — 제품명: 띄어쓰기 · 대소문자 무시하고 포함
-//        사이즈: 숫자 1개면 어느 치수든, 2개면 길이 × 높이(보이는 면), 3개면 전체 규격
-export type SearchField = "name" | "size";
+// 검색 결과 묶기 — 제품명별 또는 사이즈(전체 규격)별, 데이터 순서 유지
+export type GroupBy = "name" | "size";
 
-const squash = (s: string) => s.replace(/\s+/g, "").toLowerCase();
-
-export function matchProduct(p: Product, field: SearchField, query: string): boolean {
-  if (!query.trim()) return true;
-  if (field === "name") return squash(p.name).includes(squash(query));
-  const nums = (query.match(/\d+/g) ?? []).map(Number);
-  const dims = p.size.split("x").map(Number);
-  const { length, height } = face(p);
-  if (nums.length === 0) return false;
-  if (nums.length === 1) return dims.includes(nums[0]);
-  if (nums.length === 2) return length === nums[0] && height === nums[1];
-  return nums.slice(0, 3).every((n, i) => dims[i] === n);
+export function groupProducts<T extends Pick<Product, "name" | "size">>(list: T[], by: GroupBy): [key: string, items: T[]][] {
+  const groups = new Map<string, T[]>();
+  for (const p of list) {
+    const key = by === "name" ? p.name : p.size;
+    groups.set(key, [...(groups.get(key) ?? []), p]);
+  }
+  return [...groups];
 }
 
 // 필요한 양(장 또는 ㎡)을 재고로 댈 수 있는지 — ㎡는 견적과 같은 계산(기본 로스율 포함)

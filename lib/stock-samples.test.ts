@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchProduct, stockCheck, stockSignal } from "./stock";
+import { groupProducts, stockCheck, stockSignal } from "./stock";
 import { daysSince, isDelayed, nextStage, STAGES, type Sample } from "./samples";
 import type { Product } from "./quote";
 import data from "../data/products.json";
@@ -21,20 +21,13 @@ describe("재고 신호등 (파렛트 기준)", () => {
 });
 
 describe("재고 검색", () => {
-  const names = (field: "name" | "size", q: string) => products.filter((p) => matchProduct(p, field, q)).map((p) => `${p.name} ${p.size}`);
-
-  it("제품명: 띄어쓰기 무시, 포함 검색", () => {
-    expect(names("name", "펄토스카나")).toHaveLength(5);
-    expect(names("name", "토스카나")).toHaveLength(10); // 토스카나 + 펄 토스카나
-  });
-
-  it("사이즈: 190*57 = 길이×높이, 190x90x57 = 전체 규격, 76 = 어느 치수든", () => {
-    const n = (q: string) => names("size", q).length;
-    expect(n("190*57")).toBe(22); // 벽돌 22종 모두 190×57 있음
-    expect(n("190x90x57")).toBe(22);
-    expect(n("230×76")).toBe(19 + 6); // 벽돌 19종 + 타일 6종(230x20x76)
-    expect(n("76")).toBe(19 * 2 + 6);
-    expect(n("abc")).toBe(0);
+  it("묶기: 제품명별 · 사이즈별, 데이터 순서 유지", () => {
+    const list = products.filter((p) => p.name === "코넬" || p.name === "변색");
+    const byName = groupProducts(list, "name");
+    expect(byName.map(([k, items]) => [k, items.length])).toEqual([["코넬", 5], ["변색", 1]]);
+    const bySize = groupProducts(list, "size");
+    expect(bySize[0]).toEqual(["190x90x57", [find("코넬", "190x90x57"), find("변색", "190x90x57")]]);
+    expect(bySize).toHaveLength(5);
   });
 
   it("필요 수량: 장은 그대로, ㎡는 견적 계산(기본 로스율)으로 비교", () => {
