@@ -52,9 +52,9 @@ describe("추가 확인", () => {
     expect(formatWon(1_050_000)).toBe("1,050,000원");
   });
 
-  it("데모 장면: products.json의 붉은 벽돌 30㎡ → 2,363장 · 5파렛트", () => {
+  it("데모 장면: products.json의 붉은 벽돌(파렛트 1,300장) 30㎡ → 2,363장 · 2파렛트 · 2,600장", () => {
     const red = (products as Product[]).find((p) => p.name === "붉은 벽돌")!;
     const r = calcQuote(red, 30, 5);
-    expect(r.ok && [r.quote.required, r.quote.packs]).toEqual([2363, 5]);
+    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.orderPieces]).toEqual([2363, 2, 2600]);
   });
 });
