@@ -39,15 +39,13 @@ export default function StockPage() {
           return (
             <li key={p.code} className={`stock-row ${s}`}>
               <span className={`dot ${s}`} aria-hidden />
-              <span className="sig">{SIGNAL_LABEL[s]}</span>
-              <div className="what">
-                <strong>{p.name} {face(p).length}×{face(p).height}</strong>
-                <small>{p.category === "brick" ? "벽돌" : "타일"} · {p.code}</small>
-              </div>
-              <div className="qty">
-                <b>{formatNumber(p.stock)}장</b>
-                <small>기준 {formatNumber(p.reorderPoint)}장 · 약 {(p.stock / p.piecesPerPack).toFixed(1)}파렛트</small>
-              </div>
+              <strong className="name">{p.name} {face(p).length}×{face(p).height}</strong>
+              <b className="qty">{formatNumber(p.stock)}장</b>
+              <small className="meta">
+                {SIGNAL_LABEL[s]} · {p.category === "brick" ? "벽돌" : "타일"} · {(p.stock / p.piecesPerPack).toFixed(1)}파렛트
+                <span className="code"> · {p.code}</span>
+              </small>
+              <small className="ref">기준 {formatNumber(p.reorderPoint)}장</small>
             </li>
           );
         })}

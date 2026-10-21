@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcQuote, formatNumber, piecesPerSqm, toSqm, type Product } from "./quote";
+import { calcQuote, formatNumber, formatPacks, piecesPerSqm, toSqm, type Product } from "./quote";
 import data from "../data/products.json";
 
 const products = data as Product[];
@@ -56,6 +56,12 @@ describe("추가 확인", () => {
 
   it("장수는 천 단위 쉼표", () => {
     expect(formatNumber(7560)).toBe("7,560");
+  });
+
+  it("파렛트 표시: N파렛트 + M장 / 낱장 0이면 파렛트만 / 1파렛트 미만이면 장만", () => {
+    expect(formatPacks({ packs: 5, loose: 1060 })).toBe("5파렛트 + 1,060장");
+    expect(formatPacks({ packs: 2, loose: 0 })).toBe("2파렛트");
+    expect(formatPacks({ packs: 0, loose: 968 })).toBe("968장");
   });
 
   it("products.json: 벽돌 7종 23개 · 타일 6종 12개, 품번 중복 없음", () => {

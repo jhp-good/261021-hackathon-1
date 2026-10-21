@@ -61,3 +61,9 @@ export function calcQuote(p: Product, areaSqm: number, lossPct: number): QuoteRe
 }
 
 export const formatNumber = (n: number) => n.toLocaleString("ko-KR");
+
+// "5파렛트 + 1,060장" · "2파렛트" · "968장"
+export function formatPacks({ packs, loose }: Pick<Quote, "packs" | "loose">): string {
+  if (packs === 0) return `${formatNumber(loose)}장`;
+  return loose === 0 ? `${formatNumber(packs)}파렛트` : `${formatNumber(packs)}파렛트 + ${formatNumber(loose)}장`;
+}

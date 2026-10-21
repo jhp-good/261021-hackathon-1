@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body>
-        <Nav />
+        <div className="no-print"><Nav /></div>
         <main>{children}</main>
       </body>
     </html>
