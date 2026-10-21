@@ -93,10 +93,11 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
   display: flex; flex-direction: column; padding: 0; overflow: hidden; cursor: pointer; text-align: center;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
 }
-.product-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--line); transition: transform 0.4s ease; }
+/* 원본 사진 비율(대부분 2.29:1)을 그대로 — 벽돌 쌓은 모습이 잘리지 않게 */
+.product-card img { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; background: var(--line); transition: transform 0.4s ease; }
 .product-card:hover img { transform: scale(1.03); }
 .product-card span {
-  position: relative; padding: 12px 8px; font-weight: 600; letter-spacing: 0.04em; background: var(--surface);
+  position: relative; padding: 8px; font-weight: 600; letter-spacing: 0.04em; background: var(--surface);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .product-card.text-only span { padding: 22px 8px; }
@@ -233,7 +234,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
   .stats b { font-size: 1.6rem; }
   .size-card { padding: 12px 14px; }
   .size-card strong { font-size: 1.2rem; }
-  .product-card span { padding: 10px 6px; font-size: 0.95rem; }
+  .product-card span { padding: 6px; font-size: 0.9rem; }
   .red-count b { font-size: 2.2rem; }
   .stock-row { padding: 10px 12px; }
   .stock-row .code { display: none; }
