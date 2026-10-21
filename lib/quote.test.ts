@@ -6,7 +6,7 @@ const products = data as Product[];
 
 const item = (size: string, piecesPerPack: number, perSqm: number | null = null): Product => ({
   code: "X-TEST", category: "brick", name: "테스트", image: null, size,
-  piecesPerSqm: perSqm, packUnit: "파렛트", piecesPerPack, stock: 0, reorderPoint: 0,
+  piecesPerSqm: perSqm, packUnit: "파렛트", piecesPerPack, stock: 0,
 });
 
 describe("calc-rules.md 테스트", () => {

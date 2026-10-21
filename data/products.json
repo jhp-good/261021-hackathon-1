@@ -8,8 +8,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 13000
   },
   {
     "code": "B01-230x57",
@@ -20,8 +19,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 12155
   },
   {
     "code": "B01-290x57",
@@ -32,8 +30,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 10608
   },
   {
     "code": "B01-230x76",
@@ -44,8 +41,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 11232
   },
   {
     "code": "B01-300x76",
@@ -56,8 +52,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 8568
   },
   {
     "code": "B02-190x57",
@@ -68,8 +63,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 19500
   },
   {
     "code": "B02-230x57",
@@ -80,8 +74,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 17680
   },
   {
     "code": "B02-290x57",
@@ -92,8 +85,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 15028
   },
   {
     "code": "B02-230x76",
@@ -104,8 +96,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 15552
   },
   {
     "code": "B02-300x76",
@@ -116,8 +107,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 1530,
-    "reorderPoint": 1224
+    "stock": 4896
   },
   {
     "code": "B03-190x57",
@@ -128,8 +118,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 26000
   },
   {
     "code": "B03-230x57",
@@ -140,8 +129,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 23205
   },
   {
     "code": "B03-290x57",
@@ -152,8 +140,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 19448
   },
   {
     "code": "B03-230x76",
@@ -164,8 +151,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 8640
   },
   {
     "code": "B03-300x76",
@@ -176,8 +162,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 480,
-    "stock": 4800,
-    "reorderPoint": 960
+    "stock": 5280
   },
   {
     "code": "B04-190x57",
@@ -188,8 +173,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 15600
   },
   {
     "code": "B04-230x57",
@@ -200,8 +184,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 14365
   },
   {
     "code": "B04-290x57",
@@ -212,8 +195,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 12376
   },
   {
     "code": "B04-230x76",
@@ -224,8 +206,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 12960
   },
   {
     "code": "B04-300x76",
@@ -236,8 +217,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 9792
   },
   {
     "code": "B05-190x57",
@@ -248,8 +228,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 22100
   },
   {
     "code": "B05-230x57",
@@ -260,8 +239,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 19890
   },
   {
     "code": "B05-290x57",
@@ -272,8 +250,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 16796
   },
   {
     "code": "B05-230x76",
@@ -284,8 +261,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 17280
   },
   {
     "code": "B05-300x76",
@@ -296,8 +272,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 12852
   },
   {
     "code": "B06-190x57",
@@ -308,8 +283,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 28600
   },
   {
     "code": "B06-230x57",
@@ -320,8 +294,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 11050
   },
   {
     "code": "B06-290x57",
@@ -332,8 +305,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 9724
   },
   {
     "code": "B06-230x76",
@@ -344,8 +316,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 10368
   },
   {
     "code": "B06-300x76",
@@ -356,8 +327,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 7956
   },
   {
     "code": "B07-190x57",
@@ -368,8 +338,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 18200
   },
   {
     "code": "B07-230x57",
@@ -380,8 +349,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 16575
   },
   {
     "code": "B07-290x57",
@@ -392,8 +360,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 14144
   },
   {
     "code": "B07-230x76",
@@ -404,8 +371,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 14688
   },
   {
     "code": "B07-300x76",
@@ -416,8 +382,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 480,
-    "stock": 4800,
-    "reorderPoint": 960
+    "stock": 8640
   },
   {
     "code": "B08-190x57",
@@ -428,8 +393,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 24700
   },
   {
     "code": "B08-230x57",
@@ -440,8 +404,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 22100
   },
   {
     "code": "B08-290x57",
@@ -452,8 +415,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 18564
   },
   {
     "code": "B08-230x76",
@@ -464,8 +426,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 19008
   },
   {
     "code": "B08-300x76",
@@ -476,8 +437,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 480,
-    "stock": 480,
-    "reorderPoint": 960
+    "stock": 720
   },
   {
     "code": "B09-190x57",
@@ -488,8 +448,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 14300
   },
   {
     "code": "B09-230x57",
@@ -500,8 +459,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 13260
   },
   {
     "code": "B09-290x57",
@@ -512,8 +470,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 11492
   },
   {
     "code": "B09-230x76",
@@ -524,8 +481,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 12096
   },
   {
     "code": "B09-300x76",
@@ -536,8 +492,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 9180
   },
   {
     "code": "B10-190x57",
@@ -548,8 +503,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 20800
   },
   {
     "code": "B10-230x57",
@@ -560,8 +514,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 18785
   },
   {
     "code": "B10-290x57",
@@ -572,8 +525,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 15912
   },
   {
     "code": "B10-230x76",
@@ -584,8 +536,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 16416
   },
   {
     "code": "B10-300x76",
@@ -596,8 +547,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 6120,
-    "reorderPoint": 1224
+    "stock": 12240
   },
   {
     "code": "B11-190x57",
@@ -608,8 +558,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 27300
   },
   {
     "code": "B11-230x57",
@@ -620,8 +569,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 7735,
-    "reorderPoint": 2210
+    "stock": 24310
   },
   {
     "code": "B11-290x57",
@@ -632,8 +580,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 7072,
-    "reorderPoint": 1768
+    "stock": 8840
   },
   {
     "code": "B11-230x76",
@@ -644,8 +591,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 7776,
-    "reorderPoint": 1728
+    "stock": 9504
   },
   {
     "code": "B11-300x76",
@@ -656,8 +602,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 480,
-    "stock": 4800,
-    "reorderPoint": 960
+    "stock": 5760
   },
   {
     "code": "B12-190x57",
@@ -668,8 +613,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 7800,
-    "reorderPoint": 2600
+    "stock": 16900
   },
   {
     "code": "B13-190x57",
@@ -680,8 +624,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 9100,
-    "reorderPoint": 2600
+    "stock": 18200
   },
   {
     "code": "B14-190x57",
@@ -692,8 +635,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 10400,
-    "reorderPoint": 2600
+    "stock": 19500
   },
   {
     "code": "B15-190x57",
@@ -704,8 +646,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 20800
   },
   {
     "code": "B15-230x57",
@@ -716,8 +657,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 18785
   },
   {
     "code": "B15-290x57",
@@ -728,8 +668,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 15912
   },
   {
     "code": "B15-230x76",
@@ -740,8 +679,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 16416
   },
   {
     "code": "B15-300x76",
@@ -752,8 +690,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 12240
   },
   {
     "code": "B16-190x57",
@@ -764,8 +701,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 27300
   },
   {
     "code": "B16-230x57",
@@ -776,8 +712,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 1105,
-    "reorderPoint": 2210
+    "stock": 3315
   },
   {
     "code": "B16-290x57",
@@ -788,8 +723,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 8840
   },
   {
     "code": "B16-230x76",
@@ -800,8 +734,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 9504
   },
   {
     "code": "B16-300x76",
@@ -812,8 +745,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 7344
   },
   {
     "code": "B17-190x57",
@@ -824,8 +756,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 16900
   },
   {
     "code": "B17-230x57",
@@ -836,8 +767,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 15470
   },
   {
     "code": "B17-290x57",
@@ -848,8 +778,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 13260
   },
   {
     "code": "B17-230x76",
@@ -860,8 +789,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 13824
   },
   {
     "code": "B17-300x76",
@@ -872,8 +800,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 10404
   },
   {
     "code": "B18-190x57",
@@ -884,8 +811,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 23400
   },
   {
     "code": "B18-230x57",
@@ -896,8 +822,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 20995
   },
   {
     "code": "B18-290x57",
@@ -908,8 +833,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 17680
   },
   {
     "code": "B18-230x76",
@@ -920,8 +844,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 18144
   },
   {
     "code": "B18-300x76",
@@ -932,8 +855,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 13464
   },
   {
     "code": "B19-190x57",
@@ -944,8 +866,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 3250,
-    "reorderPoint": 2600
+    "stock": 8450
   },
   {
     "code": "B19-230x57",
@@ -956,8 +877,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 12155
   },
   {
     "code": "B19-290x57",
@@ -968,8 +888,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 10608
   },
   {
     "code": "B19-230x76",
@@ -980,8 +899,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 11232
   },
   {
     "code": "B19-300x76",
@@ -992,8 +910,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 8568
   },
   {
     "code": "B20-190x57",
@@ -1004,8 +921,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 19500
   },
   {
     "code": "B20-230x57",
@@ -1016,8 +932,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 17680
   },
   {
     "code": "B20-290x57",
@@ -1028,8 +943,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 15028
   },
   {
     "code": "B20-230x76",
@@ -1040,8 +954,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 15552
   },
   {
     "code": "B20-300x76",
@@ -1052,8 +965,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 11628
   },
   {
     "code": "B21-190x57",
@@ -1064,8 +976,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 26000
   },
   {
     "code": "B21-230x57",
@@ -1076,8 +987,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 23205
   },
   {
     "code": "B21-290x57",
@@ -1088,8 +998,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 19448
   },
   {
     "code": "B21-230x76",
@@ -1100,8 +1009,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 8640
   },
   {
     "code": "B21-300x76",
@@ -1112,8 +1020,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 6732
   },
   {
     "code": "B22-190x57",
@@ -1124,8 +1031,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1300,
-    "stock": 11700,
-    "reorderPoint": 2600
+    "stock": 15600
   },
   {
     "code": "B22-230x57",
@@ -1136,8 +1042,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1105,
-    "stock": 11050,
-    "reorderPoint": 2210
+    "stock": 14365
   },
   {
     "code": "B22-290x57",
@@ -1148,8 +1053,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 884,
-    "stock": 5304,
-    "reorderPoint": 1768
+    "stock": 12376
   },
   {
     "code": "B22-230x76",
@@ -1160,8 +1064,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 864,
-    "stock": 6048,
-    "reorderPoint": 1728
+    "stock": 12960
   },
   {
     "code": "B22-300x76",
@@ -1172,8 +1075,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 612,
-    "stock": 4896,
-    "reorderPoint": 1224
+    "stock": 9792
   },
   {
     "code": "T01-230x76",
@@ -1184,8 +1086,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 25857,
-    "reorderPoint": 5746
+    "stock": 48841
   },
   {
     "code": "T01-290x57",
@@ -1196,8 +1097,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1980,
-    "stock": 19800,
-    "reorderPoint": 3960
+    "stock": 35640
   },
   {
     "code": "T02-230x76",
@@ -1208,8 +1108,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 17238,
-    "reorderPoint": 5746
+    "stock": 54587
   },
   {
     "code": "T02-290x57",
@@ -1220,8 +1119,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1980,
-    "stock": 13860,
-    "reorderPoint": 3960
+    "stock": 39600
   },
   {
     "code": "T03-230x76",
@@ -1232,8 +1130,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 22984,
-    "reorderPoint": 5746
+    "stock": 60333
   },
   {
     "code": "T03-290x57",
@@ -1244,8 +1141,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1800,
-    "stock": 16200,
-    "reorderPoint": 3600
+    "stock": 39600
   },
   {
     "code": "T04-230x76",
@@ -1256,8 +1152,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 28730,
-    "reorderPoint": 5746
+    "stock": 28730
   },
   {
     "code": "T04-290x57",
@@ -1268,8 +1163,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1980,
-    "stock": 1980,
-    "reorderPoint": 3960
+    "stock": 8316
   },
   {
     "code": "T05-230x76",
@@ -1280,8 +1174,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 7183,
-    "reorderPoint": 5746
+    "stock": 27006
   },
   {
     "code": "T05-290x57",
@@ -1292,8 +1185,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1800,
-    "stock": 14400,
-    "reorderPoint": 3600
+    "stock": 23400
   },
   {
     "code": "T06-230x76",
@@ -1304,8 +1196,7 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 2873,
-    "stock": 25857,
-    "reorderPoint": 5746
+    "stock": 40222
   },
   {
     "code": "T06-290x57",
@@ -1316,7 +1207,6 @@
     "piecesPerSqm": null,
     "packUnit": "파렛트",
     "piecesPerPack": 1980,
-    "stock": 19800,
-    "reorderPoint": 3960
+    "stock": 29700
   }
 ]

@@ -11,8 +11,7 @@ export type Product = {
   piecesPerSqm: number | null; // 직접 값이 있으면 우선, null이면 규격으로 계산
   packUnit: "파렛트";
   piecesPerPack: number;
-  stock: number;
-  reorderPoint: number;
+  stock: number; // 현재 재고(장)
 };
 
 export type Quote = {

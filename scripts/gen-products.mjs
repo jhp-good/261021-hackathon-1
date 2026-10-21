@@ -49,15 +49,15 @@ const tiles = [
   ["브라운", null, [["230x20x76", 2873], ["290x25x57", 1980]]],
 ];
 
-// 재고(파렛트 단위) — 기본은 넉넉(초록), 데모용으로 빨강 3 · 노랑 3을 지정
-// [재고 파렛트, 기준 파렛트]
+// 재고(파렛트 단위) — 기본은 10파렛트 이상(초록), 데모용으로 빨강 3 · 노랑 3을 지정
+// 신호등: 5파렛트 미만 빨강, 10파렛트 미만 노랑
 const stockOverrides = {
-  "B08-300x76": [1, 2], // 빨강
-  "B16-230x57": [1, 2], // 빨강
-  "T04-290x57": [1, 2], // 빨강
-  "B19-190x57": [2.5, 2], // 노랑
-  "B02-300x76": [2.5, 2], // 노랑
-  "T05-230x76": [2.5, 2], // 노랑
+  "B08-300x76": 1.5, // 빨강
+  "B16-230x57": 3, // 빨강
+  "T04-290x57": 4.2, // 빨강
+  "B19-190x57": 6.5, // 노랑
+  "B02-300x76": 8, // 노랑
+  "T05-230x76": 9.4, // 노랑
 };
 
 const products = [];
@@ -66,7 +66,7 @@ const add = (category, prefix, list) =>
     for (const [size, piecesPerPack] of sizes) {
       const [length, , height] = size.split("x");
       const code = `${prefix}${String(i + 1).padStart(2, "0")}-${length}x${height}`;
-      const [stockPallets, reorderPallets] = stockOverrides[code] ?? [6 + (products.length % 5), 2];
+      const stockPallets = stockOverrides[code] ?? 10 + (products.length % 13);
       products.push({
         code,
         category,
@@ -77,7 +77,6 @@ const add = (category, prefix, list) =>
         packUnit: "파렛트",
         piecesPerPack,
         stock: Math.round(stockPallets * piecesPerPack),
-        reorderPoint: reorderPallets * piecesPerPack,
       });
     }
   });
@@ -85,7 +84,7 @@ add("brick", "B", bricks);
 add("tile", "T", tiles);
 
 // 검증 — 어긋나면 파일을 쓰지 않고 멈춘다
-const signal = (p) => (p.stock < p.reorderPoint ? "red" : p.stock < p.reorderPoint * 1.5 ? "yellow" : "green");
+const signal = (p) => (p.stock < 5 * p.piecesPerPack ? "red" : p.stock < 10 * p.piecesPerPack ? "yellow" : "green");
 const count = (s) => products.filter((p) => signal(p) === s).length;
 const errors = [];
 if (new Set(products.map((p) => p.code)).size !== products.length) errors.push("품번 중복");

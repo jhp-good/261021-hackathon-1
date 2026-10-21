@@ -16,8 +16,7 @@
 | piecesPerSqm | number \| null | 보통 null → 규격 + 줄눈 12mm로 계산. 직접 값이 있으면 우선 |
 | packUnit | "파렛트" | 포장 단위 |
 | piecesPerPack | number | 파렛트당 장수 |
-| stock | number | 현재 재고(장) |
-| reorderPoint | number | 기준 재고(장) |
+| stock | number | 현재 재고(장). 신호등은 파렛트 수로 판단 |
 
 데모용: 재고 빨강 3개, 노랑 3개가 되도록 값을 맞춘다.
 
