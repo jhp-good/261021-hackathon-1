@@ -58,12 +58,20 @@ main { max-width: 760px; margin: 0 auto; padding: 16px; }
 .field { display: block; margin-top: 20px; }
 .field h2, .field .label { display: block; margin: 0 0 8px; font-size: 0.9rem; color: var(--muted); font-weight: 600; }
 
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button {
+  padding: 10px 16px; font-weight: 700; cursor: pointer;
+  background: var(--surface); border: 2px solid var(--line); border-radius: 999px;
+}
+.chips button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
 .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
 .products button {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   padding: 10px 12px; text-align: left; cursor: pointer;
   background: var(--surface); border: 2px solid var(--line); border-radius: 10px;
 }
+.products button strong { font-size: 1.15rem; }
 .products button span { font-size: 0.82rem; color: var(--muted); }
 .products button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
 

@@ -1,31 +1,26 @@
 import { describe, expect, it } from "vitest";
 import { calcQuote, formatNumber, piecesPerSqm, toSqm, type Product } from "./quote";
-import products from "../data/products.json";
+import data from "../data/products.json";
 
-const tile = (size: string, piecesPerPack: number): Product => ({
-  code: "T-TEST", category: "tile", name: "테스트 타일", size,
-  piecesPerSqm: null, packUnit: "박스", piecesPerPack, stock: 0, reorderPoint: 0,
-});
+const products = data as Product[];
 
-const brick = (perSqm: number | null, piecesPerPack: number, size = "190x90x57"): Product => ({
-  code: "B-TEST", category: "brick", name: "테스트 벽돌", size,
+const item = (size: string, piecesPerPack: number, perSqm: number | null = null): Product => ({
+  code: "X-TEST", category: "brick", name: "테스트", size,
   piecesPerSqm: perSqm, packUnit: "파렛트", piecesPerPack, stock: 0, reorderPoint: 0,
 });
 
 describe("calc-rules.md 테스트", () => {
-  it("타일 600x600, 20㎡, 로스 10%, 박스 4장 → 62장 · 16박스 · 64장", () => {
-    const p = tile("600x600", 4);
-    expect(piecesPerSqm(p)).toBeCloseTo(2.7778, 4);
-    expect(calcQuote(p, 20, 10)).toEqual({ ok: true, quote: expect.objectContaining({ required: 62, packs: 16, orderPieces: 64 }) });
+  it("벽돌 190x90x57 → ㎡당 올림(1,000,000 / (202 × 69)) = 72장, 30㎡ 로스 5% → 2,268장 = 1파렛트 + 968장", () => {
+    expect(calcQuote(item("190x90x57", 1300), 30, 5)).toEqual({ ok: true, quote: { perSqm: 72, required: 2268, packs: 1, loose: 968 } });
   });
 
-  it("벽돌 ㎡당 75장, 30㎡, 로스 5%, 파렛트 500장 → 2,363장 = 4파렛트 + 363장 (파렛트는 올림 안 함)", () => {
-    expect(calcQuote(brick(75, 500), 30, 5)).toEqual({ ok: true, quote: expect.objectContaining({ required: 2363, packs: 4, loose: 363, orderPieces: 2363 }) });
+  it("벽돌 ㎡당 75장(직접 값), 30㎡, 로스 5%, 파렛트 500장 → 2,363장 = 4파렛트 + 363장", () => {
+    expect(calcQuote(item("190x90x57", 500, 75), 30, 5)).toEqual({ ok: true, quote: { perSqm: 75, required: 2363, packs: 4, loose: 363 } });
   });
 
-  it("벽돌 경계값: 면적 0 또는 음수는 에러 메시지", () => {
+  it("경계값: 면적 0 또는 음수는 에러 메시지", () => {
     for (const area of [0, -1, -30, NaN]) {
-      const r = calcQuote(brick(75, 500), area, 5);
+      const r = calcQuote(item("190x90x57", 1300), area, 5);
       expect(r.ok).toBe(false);
       if (!r.ok) expect(r.error).toMatch(/면적/);
     }
@@ -33,18 +28,19 @@ describe("calc-rules.md 테스트", () => {
 });
 
 describe("추가 확인", () => {
-  it("벽돌 ㎡당 장수 = 올림(1,000,000 / ((길이+12) × (높이+12))) — 폭은 안 씀", () => {
-    expect(piecesPerSqm(brick(null, 1300))).toBe(72); // 1,000,000 / (202 × 69) = 71.75 → 72
-    expect(piecesPerSqm(brick(null, 680, "230x90x76"))).toBe(47); // 1,000,000 / (242 × 88) = 46.96 → 47
-    expect(piecesPerSqm(brick(null, 680, "230x200x76"))).toBe(47); // 폭이 달라도 같다
+  it("㎡당 장수는 길이 × 높이만 쓰고 올림 — 폭·두께는 안 씀", () => {
+    expect(piecesPerSqm(item("230x90x76", 680))).toBe(47); // 1,000,000 / (242 × 88) = 46.96 → 47
+    expect(piecesPerSqm(item("230x20x76", 2873))).toBe(47); // 벽돌 타일도 같은 공식
+    expect(piecesPerSqm(item("290x90x48", 1040))).toBe(56); // 1,000,000 / (302 × 60) = 55.19 → 56
   });
 
-  it("piecesPerSqm 직접 값이 있으면 그 값을 우선한다", () => {
-    expect(piecesPerSqm(brick(75, 500))).toBe(75);
+  it("파렛트에 딱 맞으면 낱장 0, 1파렛트가 안 되면 낱장만", () => {
+    expect(calcQuote(item("190x90x57", 500, 100), 10, 0)).toEqual({ ok: true, quote: expect.objectContaining({ packs: 2, loose: 0 }) });
+    expect(calcQuote(item("190x90x57", 1300), 1, 0)).toEqual({ ok: true, quote: expect.objectContaining({ packs: 0, loose: 72 }) });
   });
 
   it("딱 떨어지는 값은 부동소수 오차로 한 장 더 올림하지 않는다 (100×1.1 = 110)", () => {
-    const r = calcQuote(tile("100x100", 10), 1, 10);
+    const r = calcQuote(item("190x90x57", 1300, 100), 1, 10);
     expect(r.ok && r.quote.required).toBe(110);
   });
 
@@ -52,26 +48,26 @@ describe("추가 확인", () => {
     expect(toSqm(30, "pyeong")).toBe(100);
     expect(toSqm(30, "pyeong", 2)).toBe(200);
     expect(toSqm(30, "sqm", 2)).toBe(30); // ㎡ 입력은 층수 무시
-    // 붉은 벽돌 30평 1층 = 100㎡ → 100 × 72 × 1.05 = 7,560장 = 5파렛트 + 1,060장
-    const r = calcQuote(brick(null, 1300), toSqm(30, "pyeong"), 5);
-    expect(r.ok && [r.quote.required, r.quote.packs, r.quote.loose]).toEqual([7560, 5, 1060]);
   });
 
   it("음수 로스율은 에러", () => {
-    expect(calcQuote(brick(75, 500), 30, -5).ok).toBe(false);
+    expect(calcQuote(item("190x90x57", 1300), 30, -5).ok).toBe(false);
   });
 
   it("장수는 천 단위 쉼표", () => {
-    expect(formatNumber(2268)).toBe("2,268");
+    expect(formatNumber(7560)).toBe("7,560");
   });
 
-  it("벽돌이 파렛트에 딱 맞으면 낱장 0", () => {
-    expect(calcQuote(brick(100, 500), 10, 0)).toEqual({ ok: true, quote: expect.objectContaining({ required: 1000, packs: 2, loose: 0 }) });
+  it("products.json: 벽돌 7종 23개 · 타일 6종 12개, 품번 중복 없음", () => {
+    const names = (c: string) => new Set(products.filter((p) => p.category === c).map((p) => p.name)).size;
+    expect([names("brick"), products.filter((p) => p.category === "brick").length]).toEqual([7, 23]);
+    expect([names("tile"), products.filter((p) => p.category === "tile").length]).toEqual([6, 12]);
+    expect(new Set(products.map((p) => p.code)).size).toBe(products.length);
   });
 
-  it("데모 장면: products.json의 붉은 벽돌 190x90x57(파렛트 1,300장) 30㎡ → 2,268장 = 1파렛트 + 968장", () => {
-    const red = (products as Product[]).find((p) => p.name === "붉은 벽돌")!;
-    const r = calcQuote(red, 30, 5); // 30 × 72 × 1.05 = 2,268
-    expect(r.ok && [r.quote.perSqm, r.quote.required, r.quote.packs, r.quote.loose]).toEqual([72, 2268, 1, 968]);
+  it("데모 장면: 적벽돌 190 30평 1층(100㎡) 로스 5% → 7,560장 = 5파렛트 + 1,060장", () => {
+    const red = products.find((p) => p.name === "적벽돌" && p.size === "190x90x57")!;
+    const r = calcQuote(red, toSqm(30, "pyeong"), 5);
+    expect(r).toEqual({ ok: true, quote: { perSqm: 72, required: 7560, packs: 5, loose: 1060 } });
   });
 });
