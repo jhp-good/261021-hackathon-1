@@ -106,38 +106,51 @@ export default function SamplesPage() {
                 const days = daysSince(s.sentDate, today);
                 return (
                   <article key={s.id} className={delayed ? "card delayed" : "card"}>
-                    <strong>{p ? `${p.name} ${face(p).length}×${face(p).height}` : s.productCode}</strong>
-                    <p>{s.customer}</p>
-                    {stage !== "발송 준비" && (
-                      <p className="meta">
-                        발송 {s.sentDate.slice(5)} · {days}일 전
+                    <div className="card-top">
+                      <div className="card-head">
+                        <b className="company">{s.customer}</b>
                         {delayed && <span className="badge">지연</span>}
-                      </p>
-                    )}
-                    {s.note && <p className="note">{s.note}</p>}
-                    {s.feedback && stage === "확인완료" && <p className="feedback-text"><span>피드백</span> {s.feedback}</p>}
+                      </div>
+                      <strong className="product">{p?.name ?? s.productCode}</strong>
+                      <div className="size-row">
+                        <span>{p ? `${face(p).length}×${face(p).height}` : ""}</span>
+                        {stage !== "발송 준비" && <span>발송 {s.sentDate.slice(5)} · {days}일 전</span>}
+                      </div>
+                    </div>
 
-                    {edit && editing === s.id ? (
-                      <div className="text-edit">
-                        <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={2}
-                          placeholder={`${edit.label}을 적어 주세요`} aria-label={`${s.id} ${edit.label}`} autoFocus />
-                        <div className="actions">
-                          <button className="small" onClick={() => saveText(s.id, edit.field)}>저장</button>
-                          <button className="small plain" onClick={() => setEditing(null)}>취소</button>
+                    {/* 아래 칸: 메모(· 피드백) + 다음 단계 단추 */}
+                    <div className="card-memo">
+                      {edit && editing === s.id ? (
+                        <div className="text-edit">
+                          <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={2}
+                            placeholder={`${edit.label}을 적어 주세요`} aria-label={`${s.id} ${edit.label}`} autoFocus />
+                          <div className="actions">
+                            <button className="small" onClick={() => saveText(s.id, edit.field)}>저장</button>
+                            <button className="small plain" onClick={() => setEditing(null)}>취소</button>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="actions">
-                        {edit && (
-                          <button className="small plain" onClick={() => startEdit(s, edit.field)}>
-                            {s[edit.field] ? `${edit.label} 수정` : `+ ${edit.label} 추가`}
-                          </button>
-                        )}
-                        {stage !== "확인완료" && (
-                          <button className="small next" onClick={() => advance(s)}>{nextStage(stage)} →</button>
-                        )}
-                      </div>
-                    )}
+                      ) : (
+                        <>
+                          <div className="memo-lines">
+                            {edit?.field === "note" ? (
+                              <button className="memo-edit" onClick={() => startEdit(s, "note")} title="눌러서 메모 쓰기">
+                                <span>메모</span>{s.note || "+ 메모 추가"}
+                              </button>
+                            ) : (
+                              <p className="memo"><span>메모</span>{s.note || "없음"}</p>
+                            )}
+                            {edit?.field === "feedback" && (
+                              <button className="memo-edit" onClick={() => startEdit(s, "feedback")} title="눌러서 피드백 쓰기">
+                                <span>피드백</span>{s.feedback || "+ 피드백 추가"}
+                              </button>
+                            )}
+                          </div>
+                          {stage !== "확인완료" && (
+                            <button className="small next" onClick={() => advance(s)}>{nextStage(stage)} →</button>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </article>
                 );
               })}

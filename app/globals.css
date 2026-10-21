@@ -223,31 +223,43 @@ main { max-width: 1200px; margin: 0 auto; padding: 16px; }
 .column h2 { margin: 2px 4px 4px; font-family: var(--serif); font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; }
 .column h2 span { color: var(--muted); font-weight: 500; }
 
+/* 샘플 카드 — 위: 회사명 · 제품명 · 사이즈 / 아래 칸: 메모 + 다음 단계 */
 .card {
-  background: var(--surface); border: 2px solid transparent; border-radius: var(--radius); padding: 10px 12px; box-shadow: var(--shadow);
-  display: flex; flex-direction: column; gap: 1px; font-size: 0.9rem; line-height: 1.45;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--surface); border: 2px solid transparent; border-radius: var(--radius); box-shadow: var(--shadow);
+  font-size: 0.9rem; line-height: 1.45;
 }
 .card.delayed { border-color: var(--yellow); }
-.card strong { font-size: 0.95rem; font-weight: 600; }
 .card p { margin: 0; }
-.card .meta, .card .note { font-size: 0.8rem; color: var(--muted); }
-.card .badge { margin-left: 6px; background: var(--yellow-soft); color: var(--text); font-weight: 600; padding: 0 6px; border-radius: 4px; }
-.card .feedback-text { margin-top: 4px; padding: 6px 8px; background: var(--bg); border-radius: 4px; font-size: 0.8rem; white-space: pre-wrap; }
-.card .feedback-text span { font-weight: 600; color: var(--muted); }
+.card-top { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 10px; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.card .company { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card .badge { flex: none; background: var(--yellow-soft); color: var(--text); font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 4px; }
+.card .product { font-size: 0.95rem; font-weight: 600; }
+.card .size-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-.card .actions { display: flex; gap: 4px; margin-top: 8px; }
+.card-memo {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 8px 10px 8px 14px; background: var(--bg); border-top: 1px solid var(--line);
+}
+.memo-lines { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.memo, .memo-edit { margin: 0; font-size: 0.8rem; color: var(--text); text-align: left; overflow-wrap: anywhere; }
+.memo span, .memo-edit span { margin-right: 6px; font-size: 0.72rem; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; }
+.memo-edit { padding: 2px 0; border: 0; background: transparent; cursor: pointer; white-space: pre-wrap; }
+.memo-edit:hover { color: var(--accent); }
+
 .card button.small {
-  padding: 3px 10px; border: 1px solid var(--accent); border-radius: 4px; cursor: pointer;
+  padding: 4px 12px; border: 1px solid var(--accent); border-radius: 4px; cursor: pointer; white-space: nowrap;
   font-size: 0.8rem; font-weight: 600; background: transparent; color: var(--accent);
 }
 .card button.small.plain { color: var(--muted); border: 1px dashed var(--muted); font-weight: 500; }
-.card button.small.next { margin-left: auto; background: var(--accent); color: var(--surface); }
-.text-edit { margin-top: 6px; }
+.card button.small.next { background: var(--accent); color: var(--surface); }
+.text-edit { grid-column: 1 / -1; }
 .text-edit textarea {
   width: 100%; padding: 6px 8px; border: 1px solid var(--accent); border-radius: 4px;
   background: var(--surface); color: var(--text); font: inherit; font-size: 0.85rem; resize: vertical;
 }
-.text-edit .actions { margin-top: 2px; }
+.text-edit .actions { display: flex; gap: 4px; margin-top: 4px; justify-content: flex-end; }
 
 /* 휴대폰 */
 @media (max-width: 599px) {
