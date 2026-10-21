@@ -5,7 +5,7 @@ import data from "../data/products.json";
 const products = data as Product[];
 
 const item = (size: string, piecesPerPack: number, perSqm: number | null = null): Product => ({
-  code: "X-TEST", category: "brick", name: "테스트", size,
+  code: "X-TEST", category: "brick", name: "테스트", image: null, size,
   piecesPerSqm: perSqm, packUnit: "파렛트", piecesPerPack, stock: 0, reorderPoint: 0,
 });
 
@@ -64,15 +64,24 @@ describe("추가 확인", () => {
     expect(formatPacks({ packs: 0, loose: 968 })).toBe("968장");
   });
 
-  it("products.json: 벽돌 7종 23개 · 타일 6종 12개, 품번 중복 없음", () => {
+  it("products.json: 점토벽돌 22종 98개 · 타일 6종 12개, 품번 중복 없음, 벽돌은 모두 사진 있음", () => {
     const names = (c: string) => new Set(products.filter((p) => p.category === c).map((p) => p.name)).size;
-    expect([names("brick"), products.filter((p) => p.category === "brick").length]).toEqual([7, 23]);
+    expect([names("brick"), products.filter((p) => p.category === "brick").length]).toEqual([22, 98]);
     expect([names("tile"), products.filter((p) => p.category === "tile").length]).toEqual([6, 12]);
     expect(new Set(products.map((p) => p.code)).size).toBe(products.length);
+    expect(products.filter((p) => p.category === "brick" && !p.image)).toEqual([]);
   });
 
-  it("데모 장면: 적벽돌 190 30평 1층(100㎡) 로스 5% → 7,560장 = 5파렛트 + 1,060장", () => {
-    const red = products.find((p) => p.name === "적벽돌" && p.size === "190x90x57")!;
+  it("사이즈: 변색 · 환원(진/연)은 190×57만, 나머지는 5가지 · 화이트 계열 300×76은 480장", () => {
+    const sizesOf = (n: string) => products.filter((p) => p.name === n).map((p) => p.size);
+    for (const n of ["변색", "환원(진)", "환원(연)"]) expect(sizesOf(n)).toEqual(["190x90x57"]);
+    expect(sizesOf("코넬")).toEqual(["190x90x57", "230x90x57", "290x90x57", "230x90x76", "300x90x76"]);
+    const pack = (n: string) => products.find((p) => p.name === n && p.size === "300x90x76")!.piecesPerPack;
+    expect([pack("코넬"), pack("엔젤화이트"), pack("블랑쉬100")]).toEqual([612, 480, 480]);
+  });
+
+  it("데모 장면: 코넬 190×57 30평 1층(100㎡) 로스 5% → 7,560장 = 5파렛트 + 1,060장", () => {
+    const red = products.find((p) => p.name === "코넬" && p.size === "190x90x57")!;
     const r = calcQuote(red, toSqm(30, "pyeong"), 5);
     expect(r).toEqual({ ok: true, quote: { perSqm: 72, required: 7560, packs: 5, loose: 1060 } });
   });

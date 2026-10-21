@@ -10,7 +10,7 @@
   },
   {
     "id": "S-02",
-    "productCode": "B05-190x57",
+    "productCode": "B07-190x57",
     "customer": "△△인테리어",
     "sentDate": "2026-10-03",
     "stage": "확인완료",
@@ -28,7 +28,7 @@
   },
   {
     "id": "S-04",
-    "productCode": "B03-230x57",
+    "productCode": "B05-230x57",
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-12",
     "stage": "도착",
@@ -37,7 +37,7 @@
   },
   {
     "id": "S-05",
-    "productCode": "B07-190x57",
+    "productCode": "B19-190x57",
     "customer": "○○건설",
     "sentDate": "2026-10-15",
     "stage": "도착",
@@ -64,7 +64,7 @@
   },
   {
     "id": "S-08",
-    "productCode": "B04-190x57",
+    "productCode": "B16-190x57",
     "customer": "□□건축",
     "sentDate": "2026-10-12",
     "stage": "발송",
@@ -73,7 +73,7 @@
   },
   {
     "id": "S-09",
-    "productCode": "B06-230x57",
+    "productCode": "B18-230x57",
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-18",
     "stage": "발송",
@@ -91,11 +91,11 @@
   },
   {
     "id": "S-11",
-    "productCode": "B05-290x48",
+    "productCode": "B09-290x57",
     "customer": "○○건설",
     "sentDate": "2026-10-20",
     "stage": "발송",
-    "note": "얇은 규격 문의",
+    "note": "버클리 색상 비교",
     "feedback": ""
   },
   {
@@ -118,7 +118,7 @@
   },
   {
     "id": "S-14",
-    "productCode": "B03-190x57",
+    "productCode": "B12-190x57",
     "customer": "◇◇종합건설",
     "sentDate": "2026-10-20",
     "stage": "발송 준비",

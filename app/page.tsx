@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import data from "@/data/products.json";
 import { calcQuote, DEFAULT_LOSS, face, formatNumber, formatPacks, toSqm, type AreaUnit, type Category, type Product } from "@/lib/quote";
 import { toDateString } from "@/lib/samples";
@@ -12,6 +12,7 @@ const TABS: { key: Category; label: string }[] = [
 ];
 const namesOf = (c: Category) => [...new Set(products.filter((p) => p.category === c).map((p) => p.name))];
 const faceLabel = (p: Product) => `${face(p).length}×${face(p).height}`;
+const imageOf = (c: Category, n: string) => products.find((p) => p.category === c && p.name === n)?.image;
 
 export default function QuotePage() {
   const [category, setCategory] = useState<Category>("brick");
@@ -21,6 +22,12 @@ export default function QuotePage() {
   const [unit, setUnit] = useState<AreaUnit>("sqm");
   const [floors, setFloors] = useState("1");
   const [loss, setLoss] = useState(String(DEFAULT_LOSS.brick));
+  const sizesRef = useRef<HTMLElement>(null);
+
+  // 제품을 고르면 사이즈 칸이 보이게 (사진 카드가 길어서 폰에서 가려짐)
+  useEffect(() => {
+    if (name) sizesRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [name]);
 
   const sizes = products.filter((p) => p.category === category && p.name === name);
   const product = sizes.find((p) => p.code === code);
@@ -60,15 +67,21 @@ export default function QuotePage() {
 
         <section className="field">
           <h2>① 제품명</h2>
-          <div className="chips">
-            {namesOf(category).map((n) => (
-              <button key={n} aria-pressed={n === name} onClick={() => pickName(n)}>{n}</button>
-            ))}
+          <div className={category === "brick" ? "photo-cards" : "chips"}>
+            {namesOf(category).map((n) => {
+              const image = imageOf(category, n);
+              return (
+                <button key={n} aria-pressed={n === name} onClick={() => pickName(n)}>
+                  {image && <img src={image} alt="" loading="lazy" />}
+                  <span>{n}</span>
+                </button>
+              );
+            })}
           </div>
         </section>
 
         {name && (
-          <section className="field">
+          <section className="field" ref={sizesRef}>
             <h2>② 사이즈</h2>
             <div className="products">
               {sizes.map((p) => (

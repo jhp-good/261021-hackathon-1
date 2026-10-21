@@ -1,49 +1,68 @@
-// data/products.json 생성 — 제품명 × 사이즈 한 줄씩 (벽돌 7종 23개, 타일 6종 12개)
+// data/products.json 생성 — 제품명 × 사이즈 한 줄씩 (점토벽돌 22종 98개, 타일 6종 12개)
 // 실행: npm run gen:data
 // 규칙: spec/data-model.md · 재고 신호등은 spec/calc-rules.md (빨강 3, 노랑 3이 되게 맞춤)
+// 벽돌 제품명 · 사진은 삼정세라믹 점토벽돌(사진은 앱 제공자 본인 자료, public/images/bricks/)
 // 규격 · 파렛트당 장수는 업계 표 기준, 재고는 가상. 단가는 자주 바뀌므로 넣지 않는다
-import { writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+
 // 규격 "길이x폭x높이"(mm) → 파렛트당 장수
 const S190 = ["190x90x57", 1300];
-const S230 = ["230x90x57", 1105];
+const ALL = [S190, ["230x90x57", 1105], ["290x90x57", 884], ["230x90x76", 864], ["300x90x76", 612]];
+const WHITE = [...ALL.slice(0, 4), ["300x90x76", 480]]; // 화이트 계열 300×76은 480장
 
-// [제품명, [[규격, 파렛트당 장수], ...]]
+// [제품명, 사진 파일, [[규격, 파렛트당 장수], ...]] — 변색 · 환원(진/연)은 190×57만
 const bricks = [
-  ["적벽돌", [S190, S230, ["290x90x57", 884], ["300x90x76", 864]]],
-  ["카멜러프", [["290x90x57", 884], ["300x90x76", 864]]],
-  ["홍고벽돌", [S190, S230, ["290x90x57", 884]]],
-  ["청고벽돌", [S190, S230, ["290x90x57", 884]]],
-  ["화이트", [S190, S230, ["250x80x57", 1040], ["290x90x48", 1040], ["300x90x76", 480]]],
-  ["전돌", [S190, S230, ["290x90x57", 936]]],
-  ["회전돌", [S190, S230, ["290x90x57", 936]]],
+  ["코넬", "hwangtosaek-wall.webp", ALL],
+  ["시에나", "siena-wall.webp", ALL],
+  ["엔젤화이트", "weibeu-hwaiteu-wall.webp", WHITE],
+  ["엔젤옐로우", "weibeu-yelrou-wall.webp", ALL],
+  ["토스카나", "toseukana-wall.webp", ALL],
+  ["펄 토스카나", "peoltoseukana.webp", ALL],
+  ["블랑쉬100", "290-beulrangswi-wall.webp", WHITE],
+  ["블랑쉬200", "beulrangswi200-wall.webp", WHITE],
+  ["버클리레드", "redeupabyeok-wall.webp", ALL],
+  ["버클리골드", "nyupabyeokgoldeu-wall.webp", ALL],
+  ["버클리화이트", "hwaiteupabyeok-wall.webp", WHITE],
+  ["환원(진)", "hwanwon-jin.webp", [S190]],
+  ["환원(연)", "hwanwon-yeon.webp", [S190]],
+  ["변색", "byeonsaek-wall.webp", [S190]],
+  ["올드브릭", "oldeubeurik-wall.webp", ALL],
+  ["엔틱스노우", "230-entikseunou-wall.webp", ALL],
+  ["엔틱블루", "230-entikbeulru-wall.webp", ALL],
+  ["전돌", "jeondol-wall.webp", ALL],
+  ["회전돌", "hansikhoejeondol.webp", ALL],
+  ["피렌체", "pirenche100.webp", ALL],
+  ["베네치아", "benechia100.webp", ALL],
+  ["밀라노믹스", "milranomikseu.webp", ALL],
 ];
 
 const tiles = [
-  ["화이트", [["230x20x76", 2873], ["290x25x57", 1980]]],
-  ["화이트 투톤", [["230x20x76", 2873], ["290x25x57", 1980]]],
-  ["레드", [["230x20x76", 2873], ["290x25x57", 1800]]],
-  ["레드 투톤", [["230x20x76", 2873], ["290x25x57", 1980]]],
-  ["그레이", [["230x20x76", 2873], ["290x25x57", 1800]]],
-  ["브라운", [["230x20x76", 2873], ["290x25x57", 1980]]],
+  ["화이트", null, [["230x20x76", 2873], ["290x25x57", 1980]]],
+  ["화이트 투톤", null, [["230x20x76", 2873], ["290x25x57", 1980]]],
+  ["레드", null, [["230x20x76", 2873], ["290x25x57", 1800]]],
+  ["레드 투톤", null, [["230x20x76", 2873], ["290x25x57", 1980]]],
+  ["그레이", null, [["230x20x76", 2873], ["290x25x57", 1800]]],
+  ["브라운", null, [["230x20x76", 2873], ["290x25x57", 1980]]],
 ];
 
 // 재고(파렛트 단위) — 기본은 넉넉(초록), 데모용으로 빨강 3 · 노랑 3을 지정
 // [재고 파렛트, 기준 파렛트]
 const stockOverrides = {
-  "B05-300x76": [1, 2], // 빨강
-  "B04-230x57": [1, 2], // 빨강
+  "B08-300x76": [1, 2], // 빨강
+  "B16-230x57": [1, 2], // 빨강
   "T04-290x57": [1, 2], // 빨강
-  "B07-190x57": [2.5, 2], // 노랑
+  "B19-190x57": [2.5, 2], // 노랑
   "B02-300x76": [2.5, 2], // 노랑
   "T05-230x76": [2.5, 2], // 노랑
 };
 
 const products = [];
 const add = (category, prefix, list) =>
-  list.forEach(([name, sizes], i) => {
+  list.forEach(([name, image, sizes], i) => {
     for (const [size, piecesPerPack] of sizes) {
       const [length, , height] = size.split("x");
       const code = `${prefix}${String(i + 1).padStart(2, "0")}-${length}x${height}`;
@@ -52,6 +71,7 @@ const add = (category, prefix, list) =>
         code,
         category,
         name,
+        image: image && `/images/bricks/${image}`,
         size,
         piecesPerSqm: null, // lib/quote.ts가 규격 + 줄눈 12mm로 계산(올림)
         packUnit: "파렛트",
@@ -75,13 +95,14 @@ if (count("yellow") !== 3) errors.push(`노랑 ${count("yellow")}개 (3개여야
 for (const p of products) {
   const dims = p.size.split("x").map(Number);
   if (dims.length !== 3 || !dims.every((d) => d > 0)) errors.push(`${p.code}: 규격 형식 오류 ${p.size}`);
+  if (p.image && !existsSync(join(root, "public", p.image))) errors.push(`${p.code}: 사진 없음 ${p.image}`);
 }
 if (errors.length) {
   console.error(errors.join("\n"));
   process.exit(1);
 }
 
-const out = join(dirname(fileURLToPath(import.meta.url)), "..", "data", "products.json");
+const out = join(root, "data", "products.json");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(products, null, 2) + "\n");
 const n = (c) => products.filter((p) => p.category === c).length;

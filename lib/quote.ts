@@ -6,6 +6,7 @@ export type Product = {
   code: string;
   category: Category;
   name: string;
+  image: string | null; // 제품 사진 경로 (public/ 기준), 없으면 null
   size: string; // mm "길이x폭x높이" — 벽돌 "190x90x57", 벽돌 타일 "230x20x76"
   piecesPerSqm: number | null; // 직접 값이 있으면 우선, null이면 규격으로 계산
   packUnit: "파렛트";
