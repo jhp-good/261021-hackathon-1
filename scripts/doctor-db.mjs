@@ -23,6 +23,7 @@ const check = (name, port) => {
   if (!url) return bad(`${name} 없음`), problems++;
   console.log(`    ${name} = ${mask(url)}`);
   if (/\[YOUR-PASSWORD\]|<[^>]+>/i.test(url)) bad(`${name}에 <비밀번호> 같은 자리표시가 그대로 있습니다`), problems++;
+  else if (/:\/\/[^:]+:\[[^\]]*\]@/.test(url)) bad(`${name} 비밀번호가 [ ]로 감싸져 있습니다 — [YOUR-PASSWORD]의 대괄호까지 지워야 합니다`), problems++;
   if (!url.includes(`:${port}/`)) bad(`${name}의 포트가 ${port}가 아닙니다`), problems++;
   else ok(`${name} 포트 ${port}`);
   return url;
@@ -49,7 +50,7 @@ try {
   problems++;
   const msg = String(e.message);
   bad(`접속 실패 ${e.errorCode ?? e.code ?? ""}`);
-  if (/28P01|P1000|password authentication/i.test(msg)) tip("28P01: 비밀번호가 틀렸습니다. Supabase → Database → Reset password 후 .env 두 줄 모두 고치세요.");
+  if (/28P01|P1000|password authentication|Authentication failed|valid database credentials/i.test(msg)) tip("28P01: 비밀번호가 틀렸습니다. Supabase → Database → Reset password 후 .env 두 줄 모두 고치세요.");
   else if (/P1001|Can't reach/i.test(msg)) tip("P1001: 주소에 닿지 못했습니다. Connect → ORM(Prisma)의 풀러 주소(6543)를 그대로 복사했는지 확인하세요.");
   else if (/Tenant or user not found/i.test(msg)) tip("사용자 이름이 postgres.<프로젝트ref> 형태인지 확인하세요.");
   else tip(msg.split("\n").slice(-2).join(" "));
